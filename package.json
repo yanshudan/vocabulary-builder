@@ -10,14 +10,25 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:vocabulary-builder.helloWorld"
+        "onCommand:vocabulary-builder.previewMaterial",
+        "onCommand:vocabulary-builder.addToKnown"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "vocabulary-builder.helloWorld",
-				"title": "Hello World"
+				"command": "vocabulary-builder.previewMaterial",
+				"title": "Filter New Words In Material"
+			},
+			{
+				"command": "vocabulary-builder.addToKnown",
+				"title": "Add To Known Words"
+			}
+		],
+		"keybindings":[
+			{
+				"command": "vocabulary-builder.addToKnown",
+				"key": "ctrl+shift+a"
 			}
 		]
 	},
