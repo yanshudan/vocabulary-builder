@@ -84,10 +84,30 @@ export async function activate(context: vscode.ExtensionContext) {
 		for (let pick of picked) {
 			finalmap.delete(pick);
 		}
+		let newlist = [...finalmap.entries()];
+		//translate
+		const chinese = translateWords(newlist);
 
 		//render web view
 		let wvp = vscode.window.createWebviewPanel("web", "New words", { preserveFocus: true, viewColumn: 1 }, { enableForms: true });
-		const strs = "<h3>" + getRenderStr(finalmap).join("</h3><h3>") + "</h3>";
+		const rawstrs = getRenderStr(newlist, chinese);
+		const htmlstrs = rawstrs.map(s => {
+			if (s.includes("-")) {
+				return `
+					</tr>
+					</tbody>
+					</table><table>
+					<thead>
+					<tr>
+					<th>${s} </th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>`;
+			}
+			return "<tr><td><h3>" + s.replaceAll(",", "</h3></td><td><h3>") + "</h3></td></tr>";
+		});
+		let strs = "<table><tbody><tr>" + htmlstrs.join("") + "</tr></tbody></table>";
 		wvp.webview.postMessage(strs);
 		console.log(strs);
 		wvp.webview.html = `
@@ -115,23 +135,25 @@ export async function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(cmd1);
 	context.subscriptions.push(cmd2);
 }
-function getRenderStr(freq: Map<string, number>): string[] {
+function getRenderStr(freq: any[], chinese: string[]): string[] {
 	//TODO: better formatting
 	let ret: string[] = [];
-	let count = 0, curr = 2, total = 120;
-	let nc = total / (curr + 2 + 8);
+	let count = 0, curr = 0, total = 120;
+	let nc = total / (curr + 3);
 	let i = 0;
 	let tmp: string = "";
-	for (let item of freq) {
+	for (let i = 0; i < freq.length; ++i) {
+		const item = freq[i];
+		const chi = chinese[i];
 		if (item[0].length > curr) {
 			ret = ret.concat([tmp]);
 			tmp = "";
 			ret = ret.concat(["-------" + i.toString()]);
 			count = 0;
 			curr += 2;
-			nc = total / (curr + 2 + 10);
+			nc = total / (curr + 3);
 		}
-		tmp += item[0] + " ".repeat(curr - item[0].length+3-item[1].toString().length) + item[1]+",";
+		tmp += item[0] + "," + item[1] + "," + chi + ",";
 		count++;
 		if (count >= nc) {
 			ret = ret.concat([tmp]);
@@ -142,6 +164,14 @@ function getRenderStr(freq: Map<string, number>): string[] {
 	}
 	ret = ret.concat(["-------" + i.toString()]);
 	return ret;
+}
+function translateWords(words: any[]): string[] {
+	const req = words.map(e => {
+		return { "translation": { "word": e[0] } };
+	});
+	//cal api
+	const response = req;
+	return response.map(e => e.translation.word);
 }
 // this method is called when your extension is deactivated
 export function deactivate() { }
