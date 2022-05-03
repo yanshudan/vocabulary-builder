@@ -120,8 +120,10 @@ export async function activate(context: vscode.ExtensionContext) {
 		}
 		const axios = require('axios').default;
 		const { v4: uuidv4 } = require('uuid');
-		const translatorConfig = config.get<Map<string, string>>("translatorConfig");
-		if (translatorConfig === undefined) { return []; };
+		const rawConfig = config.get<Map<string, string>>("translatorConfig");
+		if (rawConfig === undefined) { return []; };
+		let translatorConfig=new Map<string, string>();
+		const _ = [...Object.entries(rawConfig).values()].map(e=>translatorConfig.set(e[0],e[1]));
 		return await axios({
 			baseURL: translatorConfig.get("endpoint"),
 			url: '/translate',
