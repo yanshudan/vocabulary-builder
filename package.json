@@ -6,6 +6,10 @@
     "engines": {
         "vscode": "^1.66.0"
     },
+    "repository":{
+        "url": "https://github.com/yanshudan/vocabulary-builder",
+        "type": "github"
+    },
     "categories": [
         "Other"
     ],
