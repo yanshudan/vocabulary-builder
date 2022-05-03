@@ -1,11 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import fetch from 'node-fetch';
+import { join } from 'path';
 import path = require('path');
-import { stringify } from 'querystring';
 import * as vscode from 'vscode';
 import { addKnownWords, loadBasicWords, loadKnownWords } from "./basicWords";
-
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
@@ -86,7 +85,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		}
 		let newlist = [...finalmap.entries()];
 		//translate
-		const chinese = translateWords(newlist);
+		const chinese = await translateWords(newlist);
 
 		//render web view
 		let wvp = vscode.window.createWebviewPanel("web", "New words", { preserveFocus: true, viewColumn: 1 }, { enableForms: true });
@@ -139,7 +138,7 @@ function getRenderStr(freq: any[], chinese: string[]): string[] {
 	//TODO: better formatting
 	let ret: string[] = [];
 	let count = 0, curr = 0, total = 120;
-	let nc = total / (curr + 3);
+	let nc = total / (curr + 3 + 5);
 	let i = 0;
 	let tmp: string = "";
 	for (let i = 0; i < freq.length; ++i) {
@@ -151,7 +150,7 @@ function getRenderStr(freq: any[], chinese: string[]): string[] {
 			ret = ret.concat(["-------" + i.toString()]);
 			count = 0;
 			curr += 2;
-			nc = total / (curr + 3);
+			nc = total / (curr + 3 + 5);
 		}
 		tmp += item[0] + "," + item[1] + "," + chi + ",";
 		count++;
@@ -165,13 +164,40 @@ function getRenderStr(freq: any[], chinese: string[]): string[] {
 	ret = ret.concat(["-------" + i.toString()]);
 	return ret;
 }
-function translateWords(words: any[]): string[] {
+async function translateWords(words: any[]): Promise<string[]> {
 	const req = words.map(e => {
-		return { "translation": { "word": e[0] } };
+		return { "text": e[0] };
 	});
-	//cal api
-	const response = req;
-	return response.map(e => e.translation.word);
+	class responseType{
+		translations: { text: string; }[] = [];
+	};
+	const axios = require('axios').default;
+	const { v4: uuidv4 } = require('uuid');
+	
+	var key = "f054fa53741445798fbcc78bf4032d67";
+	var endpoint = "https://api.cognitive.microsofttranslator.com";
+	var location = "eastasia";
+
+	return await axios({
+		baseURL: endpoint,
+		url: '/translate',
+		method: 'post',
+		headers: {
+			'Ocp-Apim-Subscription-Key': key,
+			'Ocp-Apim-Subscription-Region': location,
+			'Content-type': 'application/json',
+			'X-ClientTraceId': uuidv4().toString()
+		},
+		params: {
+			'api-version': '3.0',
+			'from': 'en',
+			'to': ['zh-Hans']
+		},
+		data: req,
+		responseType: 'json'
+	}).then(function (response) {
+		return response.data.map((e:responseType) => e.translations[0].text);
+	});
 }
 // this method is called when your extension is deactivated
 export function deactivate() { }
