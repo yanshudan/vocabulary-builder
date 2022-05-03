@@ -37,8 +37,44 @@
                 "vocabBuilderConfig.knownWordsPath": {
                     "type": "string",
                     "scope": "window",
-                    "default": "C:/workspace/vocabulary-builder/knownwords.txt",
+                    "default": "knownwords.txt",
                     "description": "File to save known words."
+                },
+                "vocabBuilderConfig.outPath": {
+                    "type": "string",
+                    "scope": "window",
+                    "default": "out.txt",
+                    "description": "File to save new words with translation."
+                },
+                "vocabBuilderConfig.translatorConfig": {
+                    "type": "Map<string,string>",
+                    "scope": "window",
+                    "default": {
+                        "key": "f054fa53741445798fbcc78bf4032d67",
+                        "endpoint": "https://api.cognitive.microsofttranslator.com",
+                        "location": "eastasia"
+                    },
+                    "description": "translator configuration"
+                },
+                "vocabBuilderConfig.nullChars": {
+                    "type": "string",
+                    "scope": "window",
+                    "default": ",.:!+-—*?()[]%“”\"/1234567890\n",
+                    "description": "Ignore charecters in text preprocessing"
+                },
+                "vocabBuilderConfig.classSelectors": {
+                    "type": "Map<string,string[]>",
+                    "scope": "window",
+                    "default": {
+                        "npr": [
+                            "transcript",
+                            "stroytext"
+                        ],
+                        "scientificamerican": [
+                            "transcript__inner"
+                        ]
+                    },
+                    "description": "Class names across sites"
                 }
             }
         }

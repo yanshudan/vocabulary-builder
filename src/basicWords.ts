@@ -13,8 +13,8 @@ export function loadBasicWords(): string[] {
     return res;
 };
 
-export async function loadKnownWords(): Promise<string[]> {
-    const fileUri = vscode.Uri.file(path.resolve(vscode.workspace.getConfiguration("vocabBuilderConfig").get("knownWordsPath", "C:/workspace/known.txt")));
+export async function loadKnownWords(fpath:string): Promise<string[]> {
+    const fileUri = vscode.Uri.file(path.resolve(fpath));
     return await vscode.workspace.fs.readFile(fileUri).then(c => {
         const res = new TextDecoder("utf-8").decode(c).split("\n");
         vscode.window.showInformationMessage(JSON.stringify(res));
@@ -23,8 +23,9 @@ export async function loadKnownWords(): Promise<string[]> {
     });
 }
 
-export async function addKnownWords(newWords: string[]) {
-    const fileUri = vscode.Uri.file(path.resolve(vscode.workspace.getConfiguration("vocabBuilderConfig").get("knownWordsPath", "C:/workspace/known.txt")));
+export async function addKnownWords(newWords: string[],fpath:string) {
+    if (newWords.length === 0) { return; }
+    const fileUri = vscode.Uri.file(path.resolve(fpath));
     let final: string;
     let out: Uint8Array;
     vscode.workspace.fs.readFile(fileUri).then(c => {
