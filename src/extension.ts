@@ -77,7 +77,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	const getRenderStr = (freq: any[], chinese: string[]): string[] => {
 		//TODO: better formatting
 		let ret: string[] = [];
-		let count = 0, curr = 0, total = 120;
+		let count = 0, curr = 0, total = 90;
 		let nc = total / (curr + 3 + 5);
 		let i = 0;
 		let tmp: string = "";
@@ -90,7 +90,7 @@ export async function activate(context: vscode.ExtensionContext) {
 					tmp = "";
 					ret = ret.concat(["-------" + i.toString()]);
 					count = 0;
-					curr += 2;
+					curr += 1;
 					nc = total / (curr + 3 + 5);
 				}
 				tmp += item[0] + "," + " ".repeat(curr + 3 - item[0].length - item[1].toString().length) + item[1] + "," + chi + "　".repeat(Math.max(5 - chi.length,0)) + ",";
