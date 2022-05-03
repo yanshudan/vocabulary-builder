@@ -17,6 +17,7 @@
         "onCommand:vocabulary-builder.previewMaterial",
         "onCommand:vocabulary-builder.addToKnown"
     ],
+    "icon": "",
     "main": "./out/extension.js",
     "contributes": {
         "commands": [

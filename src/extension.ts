@@ -77,10 +77,12 @@ export async function activate(context: vscode.ExtensionContext) {
 	const getRenderStr = (freq: any[], chinese: string[]): string[] => {
 		//TODO: better formatting
 		let ret: string[] = [];
-		let count = 0, curr = 0, total = 90;
+		let count = 0, curr = 2, total = 90;
 		let nc = total / (curr + 3 + 5);
 		let i = 0;
 		let tmp: string = "";
+		vscode.window.showInformationMessage(JSON.stringify(freq));
+		vscode.window.showInformationMessage(JSON.stringify(chinese));
 		try {
 			for (let i = 0; i < freq.length; ++i) {
 				const item = freq[i];
@@ -103,7 +105,7 @@ export async function activate(context: vscode.ExtensionContext) {
 				++i;
 			}
 		} catch (e) {
-			console.log(e);
+			vscode.window.showInformationMessage(JSON.stringify(e));
 		}
 		ret = ret.concat(["-------" + i.toString()]);
 		return ret;
@@ -181,7 +183,6 @@ export async function activate(context: vscode.ExtensionContext) {
 			finalmap.delete(pick);
 		}
 		let newlist = [...finalmap.entries()];
-
 		//translate
 		const chinese = await translateWords(newlist);
 
