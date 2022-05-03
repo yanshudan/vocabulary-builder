@@ -1,4 +1,3 @@
-import { get } from 'https';
 import path = require('path');
 import { TextDecoder, TextEncoder } from 'util';
 import * as vscode from 'vscode';
@@ -17,9 +16,20 @@ export function loadBasicWords(): string[] {
 export async function loadKnownWords(): Promise<string[]> {
     const fileUri = vscode.Uri.file(path.resolve(vscode.workspace.getConfiguration("vocabBuilderConfig").get("knownWordsPath", "C:/workspace/known.txt")));
     return await vscode.workspace.fs.readFile(fileUri).then(c => {
-        const res = new TextDecoder("utf-8").decode(c).split("\r\n");
+        const res = new TextDecoder("utf-8").decode(c).split("\n");
         vscode.window.showInformationMessage(JSON.stringify(res));
         // vscode.workspace.fs.writeFile(fileUri, out);
         return res;
+    });
+}
+
+export async function addKnownWords(newWords: string[]) {
+    const fileUri = vscode.Uri.file(path.resolve(vscode.workspace.getConfiguration("vocabBuilderConfig").get("knownWordsPath", "C:/workspace/known.txt")));
+    let final: string;
+    let out: Uint8Array;
+    vscode.workspace.fs.readFile(fileUri).then(c => {
+        final = new TextDecoder("utf-8").decode(c) + newWords.join("\n") + "\n";
+        out = new TextEncoder().encode(final);
+        vscode.workspace.fs.writeFile(fileUri, out);
     });
 }
