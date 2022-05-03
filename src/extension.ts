@@ -115,17 +115,20 @@ export async function activate(context: vscode.ExtensionContext) {
 		class responseType {
 			translations: { text: string; }[] = [];
 		};
+		class responseListType{
+			data: responseType[] = [];
+		}
 		const axios = require('axios').default;
 		const { v4: uuidv4 } = require('uuid');
 		const translatorConfig = config.get<Map<string, string>>("translatorConfig");
 		if (translatorConfig === undefined) { return []; };
 		return await axios({
-			baseURL: translatorConfig.endpoint,
+			baseURL: translatorConfig.get("endpoint"),
 			url: '/translate',
 			method: 'post',
 			headers: {
-				'Ocp-Apim-Subscription-Key': translatorConfig.key,
-				'Ocp-Apim-Subscription-Region': translatorConfig.location,
+				'Ocp-Apim-Subscription-Key': translatorConfig.get("key"),
+				'Ocp-Apim-Subscription-Region': translatorConfig.get("location"),
 				'Content-type': 'application/json',
 				'X-ClientTraceId': uuidv4().toString()
 			},
@@ -136,7 +139,7 @@ export async function activate(context: vscode.ExtensionContext) {
 			},
 			data: req,
 			responseType: 'json'
-		}).then(function (response) {
+		}).then(function (response:responseListType) {
 			return response.data.map((e: responseType) => e.translations[0].text.replaceAll(" ", ""));
 		});
 	};
