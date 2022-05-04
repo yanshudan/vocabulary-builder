@@ -28,6 +28,7 @@ export namespace globals {
     export let synonyms: string[];
     export let samples: string[];
     export let samprov: SamplesProvider = new SamplesProvider();
+    export let chinese: string[];
     export async function init() {
 
         const folders = workspace.workspaceFolders ?? [];

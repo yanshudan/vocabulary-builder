@@ -85,8 +85,10 @@ export class NewWordsProvider implements vscode.TreeDataProvider<NewEntry> {
         return [index];
     };
     getTreeItem(index: NewEntry): vscode.TreeItem | Thenable<vscode.TreeItem> {
-        const count = globals.newWords.get(index)??0;
-        let ret = new vscode.TreeItem(index + "   " + count.toString());
+        const count = globals.newWords.get(index) ?? 0;
+        const keys = [...globals.newWords.keys()];
+        let i: number = keys.indexOf(index);
+        let ret = new vscode.TreeItem(index + "   " + globals.chinese[i]);
         ret.command = {
             command: 'vocabulary-builder.getSampleSentences',
             title: 'test title',

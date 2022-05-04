@@ -38,10 +38,10 @@ export async function previewMaterial () {
         finalmap.delete(pick);
     }
     globals.newWords = finalmap;
-    globals.newprov.refresh();
     //translate
-    const chinese = await lookUpDictionary([...globals.newWords.keys()]);
-    const rawstrs = getRenderStr(globals.newWords, chinese);
+    globals.chinese = await lookUpDictionary([...globals.newWords.keys()]);
+    globals.newprov.refresh();
+    const rawstrs = getRenderStr(globals.newWords, globals.chinese);
 
     //render web view
     // let wvp = vscode.window.createWebviewPanel("web", "New words", { preserveFocus: true, viewColumn: 1 }, { enableForms: true });

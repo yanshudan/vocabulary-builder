@@ -19,13 +19,16 @@ export async function sampleSentences(word?: string) {
         headers: { 'user-agent': agent }
     });
     const html = await response.text();
-    let begin = html.indexOf("<head >");
-    let end = html.indexOf("</head>") + 7;
-    const htmlwihtouthead = html.slice(0, begin) + html.slice(end, html.length);
-    // await writeTextFile(globals.outpath, [htmlwihtouthead]);
-    var domParser = require('dom-parser');
-    const htmlstr = new domParser().parseFromString(htmlwihtouthead);
-    let words = htmlstr.getElementById("__layout").getElementsByClassName("sentence-item") as {textContent:string}[]; 
-    globals.samples = words.map(e => e.textContent);
-    globals.samprov.refresh();
+    let view=window.createWebviewPanel("type", "Sample Sentences", { viewColumn: 1 });
+    view.webview.html = html;
+    view.reveal();
+    // let begin = html.indexOf("<head >");
+    // let end = html.indexOf("</head>") + 7;
+    // const htmlwihtouthead = html.slice(0, begin) + html.slice(end, html.length);
+    // // await writeTextFile(globals.outpath, [htmlwihtouthead]);
+    // var domParser = require('dom-parser');
+    // const htmlstr = new domParser().parseFromString(htmlwihtouthead);
+    // let words = htmlstr.getElementById("__layout").getElementsByClassName("sentence-item") as {textContent:string}[]; 
+    // globals.samples = words.map(e => e.textContent);
+    // globals.samprov.refresh();
 }
