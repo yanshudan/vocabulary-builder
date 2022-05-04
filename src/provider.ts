@@ -21,7 +21,13 @@ export class KnownWordsProvider implements vscode.TreeDataProvider<Entry> {
         return [index];
     };
     getTreeItem(index: Entry): vscode.TreeItem | Thenable<vscode.TreeItem> {
-        return new vscode.TreeItem(globals.knownWords[index]);
+        let ret = new vscode.TreeItem(globals.knownWords[index]);
+        ret.command = {
+            command: 'vocabulary-builder.getSampleSentences',
+            title: 'test title',
+            arguments: [globals.knownWords[index]]
+        };
+        return ret;
     };
 };
 export class SynonymsProvider implements vscode.TreeDataProvider<Entry> {
@@ -42,7 +48,13 @@ export class SynonymsProvider implements vscode.TreeDataProvider<Entry> {
         return [index];
     };
     getTreeItem(index: Entry): vscode.TreeItem | Thenable<vscode.TreeItem> {
-        return new vscode.TreeItem(globals.synonyms[index]);
+        let ret = new vscode.TreeItem(globals.synonyms[index]);
+        ret.command = {
+            command: 'vocabulary-builder.getSampleSentences',
+            title: 'test title',
+            arguments: [globals.synonyms[index]]
+        };
+        return ret;
     };
 };
 // export class SamplesProvider implements vscode.TreeDataProvider<Entry> {
