@@ -19,12 +19,12 @@ export async function sampleSentences(word?: string) {
         headers: { 'user-agent': agent }
     });
     const html = await response.text();
-    let view=window.createWebviewPanel("type", "Sample Sentences", { viewColumn: 1 });
-    view.webview.html = html;
+    let view = window.createWebviewPanel("type", "Sample Sentences", { viewColumn: 1 });
+    let begin = html.indexOf(`<ul class="sentences-list"`);
+    let end = html.indexOf("</ul", begin) + 4;
+    const htmlwihtouthead = "<!doctype html> <html><body>" + html.slice(begin, end) + "</body></html>";
+    view.webview.html = htmlwihtouthead;
     view.reveal();
-    // let begin = html.indexOf("<head >");
-    // let end = html.indexOf("</head>") + 7;
-    // const htmlwihtouthead = html.slice(0, begin) + html.slice(end, html.length);
     // // await writeTextFile(globals.outpath, [htmlwihtouthead]);
     // var domParser = require('dom-parser');
     // const htmlstr = new domParser().parseFromString(htmlwihtouthead);
