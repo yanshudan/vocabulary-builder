@@ -18,7 +18,7 @@ export async function writeTextFile(fpath: string, content: string[]): Promise<v
     await vscode.workspace.fs.writeFile(fileUri, out);
 }
 
-export function getRenderStr(freq: any[], chinese: string[]): string[] {
+export function getRenderStr(freq: Map<string, number>, chinese: string[]): string[] {
     //TODO: better formatting
     let ret: string[] = [];
     let count = 0, curr = 2, total = 90;
@@ -26,8 +26,7 @@ export function getRenderStr(freq: any[], chinese: string[]): string[] {
     let i = 0;
     let tmp: string = "";
     try {
-        for (let i = 0; i < freq.length; ++i) {
-            const item = freq[i];
+        for (let item of freq) {
             const chi = chinese[i];
             if (item[0].length > curr) {
                 ret = ret.concat([tmp]);
@@ -71,10 +70,11 @@ export async function wordCount(rawtext: string): Promise<Map<string, number>> {
     return freq;
 };
 
-export async function translateWords(words: any[]): Promise<string[]> {
+export async function translateWords(words: string[]): Promise<string[]> {
     const req = words.map(e => {
-        return { "text": e[0] };
+        return { "text": e };
     });
+    console.log(req);
     class responseType {
         translations: { text: string; }[] = [];
     };

@@ -36,13 +36,14 @@ export async function previewMaterial () {
     for (let pick of picked) {
         finalmap.delete(pick);
     }
-    let newlist = [...finalmap.entries()];
+    globals.newWords = finalmap;
+    globals.newprov.refresh();
     //translate
-    const chinese = await translateWords(newlist);
+    const chinese = await translateWords([...globals.newWords.keys()]);
 
     //render web view
     let wvp = vscode.window.createWebviewPanel("web", "New words", { preserveFocus: true, viewColumn: 1 }, { enableForms: true });
-    const rawstrs = getRenderStr(newlist, chinese);
+    const rawstrs = getRenderStr(globals.newWords, chinese);
     //TODO: add checkbox and send the known words back
 
     const htmlstrs = rawstrs.map(s => {

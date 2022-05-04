@@ -6,18 +6,7 @@ import { previewMaterial } from './previewMaterial';
 import { globals } from './globals';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-interface Entry {
-	word: string;
-};
-export class MyProvider implements vscode.TreeDataProvider<Entry> {
-	getChildren(element?: Entry): vscode.ProviderResult<Entry[]> {
-		const ret: Entry[] = [element ?? { word: "ds" }];
-		return ret;
-	};
-	getTreeItem(element: Entry): vscode.TreeItem | Thenable<vscode.TreeItem> {
-		return new vscode.TreeItem("jdslkf");
-	};
-};
+
 export async function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
@@ -27,8 +16,9 @@ export async function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let myprod = new MyProvider();
-	vscode.window.registerTreeDataProvider("vocabulary-builder-view", myprod);
+	// vscode.window.registerTreeDataProvider("vocabulary-builder-view", globals.myprod);
+	let knownWordsView = vscode.window.createTreeView("knownWords", { "treeDataProvider": globals.knownprov });
+	let newWordsView = vscode.window.createTreeView("newWords", { "treeDataProvider": globals.newprov });
 	vscode.commands.registerCommand('vocabulary-builder.previewMaterial', previewMaterial);
 	vscode.commands.registerCommand("vocabulary-builder.addToKnown", addToKnown);
 
