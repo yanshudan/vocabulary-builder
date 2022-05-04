@@ -26,7 +26,9 @@ export async function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('vocabulary-builder.previewMaterial', previewMaterial);
 	vscode.commands.registerCommand("vocabulary-builder.addToKnown", addToKnown);
 	vscode.commands.registerCommand("vocabulary-builder.lookForSyn", async ()=>await lookForSyn());
-	vscode.commands.registerCommand("vocabulary-builder.getSampleSentences", async (word)=>await sampleSentences(word));
+	vscode.commands.registerCommand("vocabulary-builder.getSampleSentences", async (word) => await sampleSentences(word));
+	vscode.commands.registerCommand("vocabulary-builder.innerWrapper", async (word) => { await sampleSentences(word); await lookForSyn(word); });
+	
 
 };
 // this method is called when your extension is deactivated

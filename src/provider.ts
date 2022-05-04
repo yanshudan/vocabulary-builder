@@ -23,7 +23,7 @@ export class KnownWordsProvider implements vscode.TreeDataProvider<Entry> {
     getTreeItem(index: Entry): vscode.TreeItem | Thenable<vscode.TreeItem> {
         let ret = new vscode.TreeItem(globals.knownWords[index]);
         ret.command = {
-            command: 'vocabulary-builder.getSampleSentences',
+            command: 'vocabulary-builder.innerWrapper',
             title: 'test title',
             arguments: [globals.knownWords[index]]
         };
@@ -102,7 +102,7 @@ export class NewWordsProvider implements vscode.TreeDataProvider<NewEntry> {
         let i: number = keys.indexOf(index);
         let ret = new vscode.TreeItem(index + "   " + globals.chinese[i]);
         ret.command = {
-            command: 'vocabulary-builder.getSampleSentences',
+            command: 'vocabulary-builder.innerWrapper',
             title: 'test title',
             arguments: [index]
         };

@@ -2,7 +2,7 @@
     "name": "vocabulary-builder",
     "displayName": "Vocabulary Builder",
     "description": "Filter out common English words in reading/listening materials to see a list of new words. Supports adding new known words  manually on  one click.",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "engines": {
         "vscode": "^1.66.0"
     },
@@ -103,7 +103,7 @@
                 "vocabBuilderConfig.synSelctor": {
                     "type": "string",
                     "scope": "window",
-                    "default": ",.:!+-—*?()[]%“”\"/1234567890\n",
+                    "default": "tz_su ",
                     "description": "tz_su "
                 },
                 "vocabBuilderConfig.classSelectors": {
