@@ -70,40 +70,6 @@ export async function wordCount(rawtext: string): Promise<Map<string, number>> {
     return freq;
 };
 
-export async function translateWords(words: string[]): Promise<string[]> {
-    const req = words.map(e => {
-        return { "text": e };
-    });
-    class responseType {
-        translations: { text: string; }[] = [];
-    };
-    class responseListType {
-        data: responseType[] = [];
-    }
-    const axios = require('axios').default;
-    const { v4: uuidv4 } = require('uuid');
-    return await axios({
-        baseURL: globals.translatorConfig.get("endpoint"),
-        url: '/translate',
-        method: 'post',
-        headers: {
-            'Ocp-Apim-Subscription-Key': globals.translatorConfig.get("key"),
-            'Ocp-Apim-Subscription-Region': globals.translatorConfig.get("location"),
-            'Content-type': 'application/json',
-            'X-ClientTraceId': uuidv4().toString()
-        },
-        params: {
-            'api-version': '3.0',
-            'from': 'en',
-            'to': ['zh-Hans']
-        },
-        data: req,
-        responseType: 'json'
-    }).then(function (response: responseListType) {
-        return response.data.map((e: responseType) => e.translations[0].text.replaceAll(" ", ""));
-    });
-};
-
 export async function grabHtml(): Promise<string> {
     const url: string = await vscode.window.showInputBox({ title: "URL of the material", ignoreFocusOut: true }).then(async url => {
         if (url === undefined) {

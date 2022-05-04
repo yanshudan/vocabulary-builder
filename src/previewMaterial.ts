@@ -1,6 +1,7 @@
 import { globals } from "./globals";
-import { getRenderStr, grabHtml, translateWords, wordCount, writeTextFile } from "./utils";
+import { getRenderStr, grabHtml, wordCount, writeTextFile } from "./utils";
 import * as vscode from 'vscode';
+import { lookUpDictionary } from "./lookUpDictionary";
 
 export async function previewMaterial () {
     // The code you place here will be executed every time your command is executed
@@ -39,7 +40,7 @@ export async function previewMaterial () {
     globals.newWords = finalmap;
     globals.newprov.refresh();
     //translate
-    const chinese = await translateWords([...globals.newWords.keys()]);
+    const chinese = await lookUpDictionary([...globals.newWords.keys()]);
     const rawstrs = getRenderStr(globals.newWords, chinese);
 
     //render web view

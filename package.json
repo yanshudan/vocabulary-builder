@@ -44,8 +44,8 @@
                     "name": "Synonyms"
                 },
                 {
-                    "id": "Translations",
-                    "name": "Translations"
+                    "id": "Samples",
+                    "name": "Sample Sentences"
                 }
             ]
         },
@@ -61,6 +61,10 @@
             {
                 "command": "vocabulary-builder.lookForSyn",
                 "title": "Look for synonyms of selected word"
+            },
+            {
+                "command": "vocabulary-builder.getSampleSentences",
+                "title": "Sample Sentences..."
             }
         ],
         "keybindings": [
@@ -106,7 +110,6 @@
                     "default": ",.:!+-—*?()[]%“”\"/1234567890\n",
                     "description": "tz_su "
                 },
-                
                 "vocabBuilderConfig.classSelectors": {
                     "type": "Map<string,string[]>",
                     "scope": "window",
