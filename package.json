@@ -25,7 +25,7 @@
                 {
                     "icon": "vocabulary-builder.svg",
                     "id": "vocabulary-builder-view",
-                    "title": "%vocabulary-builder.views.activityBar%"
+                    "title": "Vocabulary Builder"
                 }
             ]
         },
@@ -33,19 +33,19 @@
             "vocabulary-builder-view": [
                 {
                     "id": "newWords",
-                    "name": "%vocabulary-builder.views.dockerContainers%"
+                    "name": "New Words"
                 },
                 {
                     "id": "knownWords",
-                    "name": "%vocabulary-builder.views.dockerImages%"
+                    "name": "Known Words"
                 },
                 {
                     "id": "Synonyms",
-                    "name": "%vocabulary-builder.views.dockerRegistries%"
+                    "name": "Synonyms"
                 },
                 {
                     "id": "Translations",
-                    "name": "%vocabulary-builder.views.dockerNetworks%"
+                    "name": "Translations"
                 }
             ]
         },

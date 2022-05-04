@@ -23,16 +23,15 @@ export async function activate(context: vscode.ExtensionContext) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	await globals.init();
-	console.log(globals.fpath);
 	console.log('vocabulary-builder is activated');
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let cmd1 = vscode.commands.registerCommand('vocabulary-builder.previewMaterial', previewMaterial);
-	let cmd2 = vscode.commands.registerCommand("vocabulary-builder.addToKnown", addToKnown);
+	let myprod = new MyProvider();
+	vscode.window.registerTreeDataProvider("vocabulary-builder-view", myprod);
+	vscode.commands.registerCommand('vocabulary-builder.previewMaterial', previewMaterial);
+	vscode.commands.registerCommand("vocabulary-builder.addToKnown", addToKnown);
 
-	context.subscriptions.push(cmd1);
-	context.subscriptions.push(cmd2);
 };
 // this method is called when your extension is deactivated
 export function deactivate() { }
