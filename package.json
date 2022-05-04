@@ -6,7 +6,7 @@
     "engines": {
         "vscode": "^1.66.0"
     },
-    "repository":{
+    "repository": {
         "url": "https://github.com/yanshudan/vocabulary-builder",
         "type": "github"
     },
@@ -20,6 +20,35 @@
     "icon": "",
     "main": "./out/extension.js",
     "contributes": {
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "icon": "vocabulary-builder.svg",
+                    "id": "vocabulary-builder-view",
+                    "title": "%vocabulary-builder.views.activityBar%"
+                }
+            ]
+        },
+        "views": {
+            "vocabulary-builder-view": [
+                {
+                    "id": "newWords",
+                    "name": "%vocabulary-builder.views.dockerContainers%"
+                },
+                {
+                    "id": "knownWords",
+                    "name": "%vocabulary-builder.views.dockerImages%"
+                },
+                {
+                    "id": "Synonyms",
+                    "name": "%vocabulary-builder.views.dockerRegistries%"
+                },
+                {
+                    "id": "Translations",
+                    "name": "%vocabulary-builder.views.dockerNetworks%"
+                }
+            ]
+        },
         "commands": [
             {
                 "command": "vocabulary-builder.previewMaterial",
