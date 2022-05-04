@@ -28,7 +28,7 @@ export async function sampleSentences(word?: string) {
     // // await writeTextFile(globals.outpath, [htmlwihtouthead]);
     // var domParser = require('dom-parser');
     // const htmlstr = new domParser().parseFromString(htmlwihtouthead);
-    // let words = htmlstr.getElementById("__layout").getElementsByClassName("sentence-item") as {textContent:string}[]; 
+    // let words = htmlstr.getElementsByClassName("sentence-item") as {textContent:string}[]; 
     // globals.samples = words.map(e => e.textContent);
     // globals.samprov.refresh();
 }

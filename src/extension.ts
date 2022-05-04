@@ -22,7 +22,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	let knownWordsView = vscode.window.createTreeView("knownWords", { "treeDataProvider": globals.knownprov });
 	let newWordsView = vscode.window.createTreeView("newWords", { "treeDataProvider": globals.newprov });
 	let synonymsView = vscode.window.createTreeView("Synonyms", { "treeDataProvider": globals.synprov });
-	let samplesView = vscode.window.createTreeView("Samples", { "treeDataProvider": globals.samprov });
+	// let samplesView = vscode.window.createTreeView("Samples", { "treeDataProvider": globals.samprov });
 	vscode.commands.registerCommand('vocabulary-builder.previewMaterial', previewMaterial);
 	vscode.commands.registerCommand("vocabulary-builder.addToKnown", addToKnown);
 	vscode.commands.registerCommand("vocabulary-builder.lookForSyn", async ()=>await lookForSyn());
