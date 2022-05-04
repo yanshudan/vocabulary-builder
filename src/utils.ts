@@ -74,7 +74,6 @@ export async function translateWords(words: string[]): Promise<string[]> {
     const req = words.map(e => {
         return { "text": e };
     });
-    console.log(req);
     class responseType {
         translations: { text: string; }[] = [];
     };

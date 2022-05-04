@@ -57,6 +57,10 @@
             {
                 "command": "vocabulary-builder.addToKnown",
                 "title": "Add To Known Words"
+            },
+            {
+                "command": "vocabulary-builder.lookForSyn",
+                "title": "Look for synonyms of selected word"
             }
         ],
         "keybindings": [
@@ -96,6 +100,13 @@
                     "default": ",.:!+-—*?()[]%“”\"/1234567890\n",
                     "description": "Ignore charecters in text preprocessing"
                 },
+                "vocabBuilderConfig.synSelctor": {
+                    "type": "string",
+                    "scope": "window",
+                    "default": ",.:!+-—*?()[]%“”\"/1234567890\n",
+                    "description": "tz_su "
+                },
+                
                 "vocabBuilderConfig.classSelectors": {
                     "type": "Map<string,string[]>",
                     "scope": "window",
@@ -139,6 +150,7 @@
         "axios": "^0.27.2",
         "dom-parser": "^0.1.6",
         "node-fetch": "^2.6.1",
+        "powerthesaurus-api": "^2.0.3",
         "uuid": "^8.3.2"
     }
 }

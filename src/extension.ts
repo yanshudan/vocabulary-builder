@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import { addToKnown } from './addToKnown';
 import { previewMaterial } from './previewMaterial';
 import { globals } from './globals';
+import { lookForSyn } from './lookForSyn';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -19,8 +20,10 @@ export async function activate(context: vscode.ExtensionContext) {
 	// vscode.window.registerTreeDataProvider("vocabulary-builder-view", globals.myprod);
 	let knownWordsView = vscode.window.createTreeView("knownWords", { "treeDataProvider": globals.knownprov });
 	let newWordsView = vscode.window.createTreeView("newWords", { "treeDataProvider": globals.newprov });
+	let synonymsView = vscode.window.createTreeView("Synonyms", { "treeDataProvider": globals.synprov });
 	vscode.commands.registerCommand('vocabulary-builder.previewMaterial', previewMaterial);
 	vscode.commands.registerCommand("vocabulary-builder.addToKnown", addToKnown);
+	vscode.commands.registerCommand("vocabulary-builder.lookForSyn", async ()=>await lookForSyn());
 
 };
 // this method is called when your extension is deactivated

@@ -1,7 +1,7 @@
 import path = require("path");
 import { TextEncoder } from "util";
 import { Uri, workspace, WorkspaceConfiguration } from "vscode";
-import { KnownWordsProvider, NewWordsProvider } from "./provider";
+import { KnownWordsProvider, NewWordsProvider, SynonymsProvider } from "./provider";
 import { loadTextFile } from "./utils";
 export namespace globals {
     const lemmas = [
@@ -23,7 +23,9 @@ export namespace globals {
     export let nullchars: string;
     export let knownprov: KnownWordsProvider = new KnownWordsProvider();
     export let newprov: NewWordsProvider = new NewWordsProvider();
-    export let newWords: Map<string,number>;
+    export let synprov: SynonymsProvider = new SynonymsProvider();
+    export let newWords: Map<string, number>;
+    export let synonyms: string[];
     export async function init() {
 
         const folders = workspace.workspaceFolders ?? [];
