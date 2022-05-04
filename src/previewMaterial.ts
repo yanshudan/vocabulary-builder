@@ -40,28 +40,27 @@ export async function previewMaterial () {
     globals.newprov.refresh();
     //translate
     const chinese = await translateWords([...globals.newWords.keys()]);
+    const rawstrs = getRenderStr(globals.newWords, chinese);
 
     //render web view
-    let wvp = vscode.window.createWebviewPanel("web", "New words", { preserveFocus: true, viewColumn: 1 }, { enableForms: true });
-    const rawstrs = getRenderStr(globals.newWords, chinese);
-    //TODO: add checkbox and send the known words back
+    // let wvp = vscode.window.createWebviewPanel("web", "New words", { preserveFocus: true, viewColumn: 1 }, { enableForms: true });
 
-    const htmlstrs = rawstrs.map(s => {
-        if (s.includes("-")) {
-            return `</tr> </tbody> </table><table> <thead> <tr> <th>${s} </th> </tr> </thead> <tbody> <tr>`;
-        }
-        return "<tr><td><h3>" + s.replaceAll(",", "</h3></td><td><h3>") + "</h3></td></tr>";
-    });
-    let strs = "<table><tbody><tr>" + htmlstrs.join("") + "</tr></tbody></table>";
-    wvp.webview.postMessage(strs);
-    wvp.webview.html = `
-			<!DOCTYPE html>
-			<html lang="en">
-			<head></head>
-			<body>
-				${strs}
-			</body>
-			</html>`;
+    // const htmlstrs = rawstrs.map(s => {
+    //     if (s.includes("-")) {
+    //         return `</tr> </tbody> </table><table> <thead> <tr> <th>${s} </th> </tr> </thead> <tbody> <tr>`;
+    //     }
+    //     return "<tr><td><h3>" + s.replaceAll(",", "</h3></td><td><h3>") + "</h3></td></tr>";
+    // });
+    // let strs = "<table><tbody><tr>" + htmlstrs.join("") + "</tr></tbody></table>";
+    // wvp.webview.postMessage(strs);
+    // wvp.webview.html = `
+	// 		<!DOCTYPE html>
+	// 		<html lang="en">
+	// 		<head></head>
+	// 		<body>
+	// 			${strs}
+	// 		</body>
+	// 		</html>`;
 
     writeTextFile(globals.outpath, rawstrs.map(e => e.replaceAll(",", " ")));
     //TODO: open text editor
