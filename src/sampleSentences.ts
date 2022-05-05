@@ -1,11 +1,12 @@
 import fetch from "node-fetch";
-import { window } from "vscode";
+import { WebviewPanel, window } from "vscode";
 import { globals } from "./globals";
 import { writeTextFile } from "./utils";
 
 
 const agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36';
 const base = 'https://sentence.yourdictionary.com';
+let view: WebviewPanel;
 export async function sampleSentences(word?: string) {
     if (word === undefined) {
         const sel = window.activeTextEditor?.selection;
@@ -19,7 +20,11 @@ export async function sampleSentences(word?: string) {
         headers: { 'user-agent': agent }
     });
     const html = await response.text();
-    let view = window.createWebviewPanel("type", "Sample Sentences", { viewColumn: 1 });
+    try {
+        view.active;
+    } catch {
+        view = window.createWebviewPanel("type", "Sample Sentences", { viewColumn: 1 });
+    };
     let begin = html.indexOf(`<ul class="sentences-list"`);
     let end = html.indexOf("</ul", begin) + 4;
     const htmlwihtouthead = "<!doctype html> <html><body>" + html.slice(begin, end) + "</body></html>";

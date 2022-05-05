@@ -28,7 +28,8 @@ export async function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand("vocabulary-builder.addToKnown", addToKnown);
 	vscode.commands.registerCommand("vocabulary-builder.lookForSyn", async ()=>await lookForSyn());
 	vscode.commands.registerCommand("vocabulary-builder.getSampleSentences", async (word) => await sampleSentences(word));
-	vscode.commands.registerCommand("vocabulary-builder.innerWrapper", async (word) => { await sampleSentences(word); await lookForSyn(word); });
+	//TODO: running icon to indicate running requests
+	vscode.commands.registerCommand("vocabulary-builder.innerWrapper",  (word) => {  sampleSentences(word);  lookForSyn(word); });
 	
 
 };
