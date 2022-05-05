@@ -107,11 +107,6 @@ export class NewWordsProvider implements vscode.TreeDataProvider<NewEntry> {
             title: 'test title',
             arguments: [index]
         };
-        //TODO: add "pick to known" icon
-        // ret.iconPath = {
-        //     light: globals.rootpath + '/add.svg',
-        //     dark: globals.rootpath + '/add.svg'
-        // };
         ret.label = index;
         ret.description = count.toString()+" times";
         ret.tooltip = globals.chinese[i];
