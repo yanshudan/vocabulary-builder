@@ -47,6 +47,7 @@ export namespace globals {
             await workspace.fs.writeFile(Uri.file(fpath), new TextEncoder().encode(""));
         }
         await workspace.fs.writeFile(Uri.file(outpath), new TextEncoder().encode(""));
+        //TODO: add CET4, IELTS/TOEFL, GRE vocabs
         wordlib.set("level1", ["ono", "val", "abs", "eke", "sow", "uhh", "sss", "zzz", "hid", "hud", "jam", "www", "org"]);
         wordlib.set("level2", ["tuh", "nuh", "puh", "duh", "mum", "cuh", "hoc", "ups"]);
         knownWords = await loadTextFile(fpath);

@@ -48,7 +48,6 @@ export async function previewMaterial() {
     globals.chinese = await lookUpDictionary([...globals.newWords.keys()]);
     globals.newprov.refresh();
     const rawstrs = getRenderStr(globals.newWords, globals.chinese);
-    //TODO: add group by level, eg. CET4, IELTS/TOEFL, GRE...
     //render web view
     // let wvp = vscode.window.createWebviewPanel("web", "New words", { preserveFocus: true, viewColumn: 1 }, { enableForms: true });
 
