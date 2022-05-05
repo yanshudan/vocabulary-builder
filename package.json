@@ -21,19 +21,20 @@
     "main": "./out/extension.js",
     "contributes": {
         "menus": {
-            "view/title": [
-                {
-                    "command": "vocabulary-builder.addToKnown",
-                    "when": "view == newWords"
-                }
-            ],
             "view/item/context": [
                 {
                     "command": "vocabulary-builder.addToKnown",
-                    "when": "viewItem == newWord"
+                    "when": "viewItem == newWord",
+                    "group": "inline"
                 }
             ]
         },
+        "viewsWelcome": [
+            {
+                "view": "newWords",
+                "contents": "No new words.\n Add new material[learn more](https://www.npmjs.com/).\n[Add Material](command:vocabulary-builder.previewMaterial)"
+            }
+        ],
         "viewsContainers": {
             "activitybar": [
                 {
@@ -66,7 +67,11 @@
             },
             {
                 "command": "vocabulary-builder.addToKnown",
-                "title": "Add To Known Words"
+                "title": "Add To Known Words",
+                "icon": {
+                    "dark": "add.svg",
+                    "light": "add.svg"
+                }
             },
             {
                 "command": "vocabulary-builder.lookForSyn",
@@ -135,7 +140,10 @@
                     "description": "Class names across sites"
                 }
             }
-        }
+        },
+        "activationEvents": [
+            "onView:newWords"
+        ]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

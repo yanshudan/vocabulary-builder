@@ -53,7 +53,7 @@ export function getRenderStr(freq: Map<string, number>, chinese: string[]): stri
 
 export async function wordCount(rawtext: string): Promise<Map<string, number>> {
     let words = rawtext.toLowerCase();
-    //TODO: use regex
+    //TODO: use libs to split words, support more languages
     for (let c of globals.nullchars) {
         words = words.replaceAll(c, " ");
     }
