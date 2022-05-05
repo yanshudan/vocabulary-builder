@@ -14,10 +14,9 @@ export async function previewMaterial () {
     //extract text
     var domParser = require('dom-parser');
     const htmlstr = new domParser().parseFromString(html);
-
     let rawtext: string = "";
     for (let sel of globals.selector) {
-        rawtext += (htmlstr.getElementsByClassName(sel)[0] ?? { textContext: "" }).textContent;
+        rawtext += (htmlstr.getElementsByAttribute("class",sel)[0] ?? { textContext: "" }).textContent;
     }
 
     //wordcount, sort by length and freq

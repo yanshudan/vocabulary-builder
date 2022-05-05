@@ -111,7 +111,7 @@
                 "vocabBuilderConfig.nullChars": {
                     "type": "string",
                     "scope": "window",
-                    "default": ",.:!+-—*?()[]%“”\"/1234567890\n",
+                    "default": ",.:!+-—*=#$_?()&;{}<>[]%“”\"/1234567890\n",
                     "description": "Ignore charecters in text preprocessing"
                 },
                 "vocabBuilderConfig.synSelctor": {
@@ -162,6 +162,7 @@
     "dependencies": {
         "axios": "^0.27.2",
         "dom-parser": "^0.1.6",
+        "encoding": "^0.1.13",
         "node-fetch": "^2.6.1",
         "powerthesaurus-api": "^2.0.3",
         "uuid": "^8.3.2"

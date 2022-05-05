@@ -90,11 +90,15 @@ export async function grabHtml(): Promise<string> {
         return "";
     }
 
+    globals.selector = [];
     for (let k of [...globals.selectors.entries()]) {
         if (url.includes(k[0])) {
             globals.selector = k[1] ?? [];
             break;
         }
+    }
+    if (globals.selector.length === 0) {
+        globals.selector = ["*"];
     }
     const result = await response.text();
     return result;

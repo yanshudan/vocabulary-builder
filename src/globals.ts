@@ -47,7 +47,7 @@ export namespace globals {
         knownWords = await loadTextFile(fpath);
         nullchars = config.get<string>("nullChars", "");
         let defaultSeletors = new Map<string, string[]>();
-        defaultSeletors.set("npr", ["transcript"]);
+        defaultSeletors.set("http", [""]);
         const rawSelectors = config.get<Map<string, string[]>>("classSelectors", defaultSeletors);
         const _1 = [...Object.entries(rawSelectors).values()].map(e => selectors.set(e[0], e[1]));
         const rawConfig = config.get<Map<string, string>>("translatorConfig", new Map<string, string>());
