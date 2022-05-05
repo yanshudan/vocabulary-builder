@@ -3,7 +3,7 @@ import { getRenderStr, grabHtml, wordCount, writeTextFile } from "./utils";
 import * as vscode from 'vscode';
 import { lookUpDictionary } from "./lookUpDictionary";
 
-export async function previewMaterial () {
+export async function previewMaterial() {
     // The code you place here will be executed every time your command is executed
     // Display a message box to the user
 
@@ -15,8 +15,13 @@ export async function previewMaterial () {
     var domParser = require('dom-parser');
     const htmlstr = new domParser().parseFromString(html);
     let rawtext: string = "";
-    for (let sel of globals.selector) {
-        rawtext += (htmlstr.getElementsByAttribute("class",sel)[0] ?? { textContext: "" }).textContent;
+    if (globals.selector.length === 0) {
+        rawtext += (htmlstr.getElementsByAttribute("*", "*")[0] ?? { textContent: "" }).textContent;
+    } else {
+        for (let sel of globals.selector) {
+            const content = htmlstr.getElementsByClassName(sel) as { textContent: string }[];
+            rawtext += content.map(e => e.textContent);
+        }
     }
 
     //wordcount, sort by length and freq
@@ -54,13 +59,13 @@ export async function previewMaterial () {
     // let strs = "<table><tbody><tr>" + htmlstrs.join("") + "</tr></tbody></table>";
     // wvp.webview.postMessage(strs);
     // wvp.webview.html = `
-	// 		<!DOCTYPE html>
-	// 		<html lang="en">
-	// 		<head></head>
-	// 		<body>
-	// 			${strs}
-	// 		</body>
-	// 		</html>`;
+    // 		<!DOCTYPE html>
+    // 		<html lang="en">
+    // 		<head></head>
+    // 		<body>
+    // 			${strs}
+    // 		</body>
+    // 		</html>`;
 
     writeTextFile(globals.outpath, rawstrs.map(e => e.replaceAll(",", " ")));
 }

@@ -111,7 +111,7 @@
                 "vocabBuilderConfig.nullChars": {
                     "type": "string",
                     "scope": "window",
-                    "default": ",.:!+-—*=#$_?()&;{}<>[]%“”\"/1234567890\n",
+                    "default": ",.:!+-—*=#$_?()&;{}<>[]%“”\"/1234567890\n\t\r",
                     "description": "Ignore charecters in text preprocessing"
                 },
                 "vocabBuilderConfig.synSelctor": {

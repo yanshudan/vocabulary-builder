@@ -97,9 +97,6 @@ export async function grabHtml(): Promise<string> {
             break;
         }
     }
-    if (globals.selector.length === 0) {
-        globals.selector = ["*"];
-    }
     const result = await response.text();
     return result;
 };
