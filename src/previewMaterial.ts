@@ -1,5 +1,5 @@
 import { globals } from "./globals";
-import { getRenderStr, grabHtml, wordCount, writeTextFile } from "./utils";
+import { getRenderStr, grabHtml, groupByLevel, wordCount, writeTextFile } from "./utils";
 import * as vscode from 'vscode';
 import { lookUpDictionary } from "./lookUpDictionary";
 
@@ -42,6 +42,7 @@ export async function previewMaterial() {
         finalmap.delete(pick);
     }
     globals.newWords = finalmap;
+    globals.groupedNewWords=await groupByLevel(globals.newWords);
     //translate
     globals.chinese = await lookUpDictionary([...globals.newWords.keys()]);
     globals.newprov.refresh();

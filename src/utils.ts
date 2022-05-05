@@ -100,3 +100,25 @@ export async function grabHtml(): Promise<string> {
     const result = await response.text();
     return result;
 };
+
+export async function groupByLevel(words: Map<string, number>) {
+    let lib;
+    let n = globals.wordlib.length;
+    let ret: Map<string, number>[] = new Array<Map<string, number>>(n + 1);
+    ret[n] = new Map<string, number>();
+    let m;
+    for (let word of words) {
+        for (let i = 0; i < n; ++i) {
+            lib = globals.wordlib[i];
+            if (lib.includes(word[0])) {
+                if (ret[i] === undefined) {
+                    ret[i] = new Map<string, number>();
+                }
+                ret[i].set(word[0], word[1]);
+                break;
+            }
+        }
+        ret[n].set(word[0], word[1]);
+    }
+    return ret;
+}
