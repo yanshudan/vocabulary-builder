@@ -20,6 +20,10 @@ export async function sampleSentences(word?: string) {
     const response = await fetch(base + '/' + word, {
         headers: { 'user-agent': agent }
     });
+    if (response.status === 403) {
+        window.showInformationMessage("Check your VPN");
+        return ;
+    }
     const html = await response.text();
     try {
         view.active;
