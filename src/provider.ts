@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { globals } from "./globals";
+import * as json from 'jsonc-parser';
 
 type Entry = number;
 
@@ -78,39 +79,3 @@ export class SynonymsProvider implements vscode.TreeDataProvider<Entry> {
 //         return new vscode.TreeItem(globals.samples[index]);
 //     };
 // };
-
-type NewEntry = string;
-export class NewWordsProvider implements vscode.TreeDataProvider<NewEntry> {
-    private _onDidChangeTreeData: vscode.EventEmitter<NewEntry | null> = new vscode.EventEmitter<NewEntry | null>();
-    readonly onDidChangeTreeData: vscode.Event<NewEntry | null> = this._onDidChangeTreeData.event;
-
-    refresh(offset?: NewEntry): void {
-        if (offset) {
-            this._onDidChangeTreeData.fire(offset);
-        } else {
-            this._onDidChangeTreeData.fire(null);
-        }
-    }
-    getChildren(index: NewEntry): vscode.ProviderResult<NewEntry[]> {
-        if (index === undefined) {
-            return [...globals.newWords.keys()];
-        }
-        return [index];
-    };
-    getTreeItem(index: NewEntry): vscode.TreeItem | Thenable<vscode.TreeItem> {
-        const count = globals.newWords.get(index) ?? 0;
-        const keys = [...globals.newWords.keys()];
-        let i: number = keys.indexOf(index);
-        let ret = new vscode.TreeItem(index);
-        ret.command = {
-            command: 'vocabulary-builder.innerWrapper',
-            title: 'test title',
-            arguments: [index]
-        };
-        ret.label = index;
-        ret.description = count.toString()+" times";
-        ret.tooltip = globals.chinese[i];
-        ret.contextValue = "newWord";
-        return ret;
-    };
-};

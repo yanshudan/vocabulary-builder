@@ -171,6 +171,7 @@
         "axios": "^0.27.2",
         "dom-parser": "^0.1.6",
         "encoding": "^0.1.13",
+        "jsonc-parser": "^3.0.0",
         "node-fetch": "^2.6.1",
         "powerthesaurus-api": "^2.0.3",
         "uuid": "^8.3.2"

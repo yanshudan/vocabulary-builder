@@ -1,7 +1,8 @@
 import path = require("path");
 import { TextEncoder } from "util";
 import { Uri, workspace, WorkspaceConfiguration } from "vscode";
-import { KnownWordsProvider, NewWordsProvider, SynonymsProvider } from "./provider";
+import { NewWordsProvider } from "./jsonOutline";
+import { KnownWordsProvider, SynonymsProvider } from "./provider";
 import { loadTextFile } from "./utils";
 export namespace globals {
     const lemmas = [
@@ -22,10 +23,21 @@ export namespace globals {
     export let translatorConfig: Map<string, string> = new Map<string, string>();
     export let nullchars: string;
     export let knownprov: KnownWordsProvider = new KnownWordsProvider();
-    export let newprov: NewWordsProvider = new NewWordsProvider();
+    export let newprov: NewWordsProvider;
     export let synprov: SynonymsProvider = new SynonymsProvider();
     export let newWords: Map<string, number>;
     export let synonyms: string[];
+    export let wordlib: string[][] = [];
+    //json format
+    export let groupedNewWords: string = `{"viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "todo-tree-container",
+                    "title": "%todo-tree.activitybar.title%",
+                    "icon": "resources/todo-tree-container.svg"
+                }
+            ]
+        }}`;
     // export let samples: string[];
     // export let samprov: SamplesProvider = new SamplesProvider();
     export let chinese: string[];
@@ -43,7 +55,8 @@ export namespace globals {
             await workspace.fs.writeFile(Uri.file(fpath), new TextEncoder().encode(""));
         }
         await workspace.fs.writeFile(Uri.file(outpath), new TextEncoder().encode(""));
-
+        wordlib.push(["ono", "val", "abs", "eke", "sow", "uhh", "sss", "zzz", "hid", "hud", "jam", "www", "org"]);
+        wordlib.push(["tuh", "nuh", "puh", "duh", "mum", "cuh", "hoc", "ups"]);
         knownWords = await loadTextFile(fpath);
         nullchars = config.get<string>("nullChars", "");
         let defaultSeletors = new Map<string, string[]>();

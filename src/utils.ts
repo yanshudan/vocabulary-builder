@@ -101,7 +101,7 @@ export async function grabHtml(): Promise<string> {
     return result;
 };
 
-export async function groupByLevel(words: Map<string, number>) {
+export async function groupByLevel(words: Map<string, number>):Promise<string> {
     let lib;
     let n = globals.wordlib.length;
     let ret: Map<string, number>[] = new Array<Map<string, number>>(n + 1);
@@ -120,5 +120,5 @@ export async function groupByLevel(words: Map<string, number>) {
         }
         ret[n].set(word[0], word[1]);
     }
-    return ret;
+    return `{[${ret.map(m => JSON.stringify([...m.entries()])).join(",")}]}`;
 }
