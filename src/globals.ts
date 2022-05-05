@@ -1,7 +1,7 @@
 import path = require("path");
 import { TextEncoder } from "util";
 import { Uri, workspace, WorkspaceConfiguration } from "vscode";
-import { NewWordsProvider } from "./jsonOutline";
+import { NewWordsProvider } from "./newWordsProvider";
 import { KnownWordsProvider, SynonymsProvider } from "./provider";
 import { loadTextFile } from "./utils";
 export namespace globals {
@@ -27,17 +27,9 @@ export namespace globals {
     export let synprov: SynonymsProvider = new SynonymsProvider();
     export let newWords: Map<string, number>;
     export let synonyms: string[];
-    export let wordlib: string[][] = [];
+    export let wordlib: Map<string, string[]> = new Map<string, string[]>();
     //json format
-    export let groupedNewWords: string = `{"viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "todo-tree-container",
-                    "title": "%todo-tree.activitybar.title%",
-                    "icon": "resources/todo-tree-container.svg"
-                }
-            ]
-        }}`;
+    export let groupedNewWords: Map<string, Map<string, number>>;
     // export let samples: string[];
     // export let samprov: SamplesProvider = new SamplesProvider();
     export let chinese: string[];
@@ -55,9 +47,10 @@ export namespace globals {
             await workspace.fs.writeFile(Uri.file(fpath), new TextEncoder().encode(""));
         }
         await workspace.fs.writeFile(Uri.file(outpath), new TextEncoder().encode(""));
-        wordlib.push(["ono", "val", "abs", "eke", "sow", "uhh", "sss", "zzz", "hid", "hud", "jam", "www", "org"]);
-        wordlib.push(["tuh", "nuh", "puh", "duh", "mum", "cuh", "hoc", "ups"]);
+        wordlib.set("level1", ["ono", "val", "abs", "eke", "sow", "uhh", "sss", "zzz", "hid", "hud", "jam", "www", "org"]);
+        wordlib.set("level2", ["tuh", "nuh", "puh", "duh", "mum", "cuh", "hoc", "ups"]);
         knownWords = await loadTextFile(fpath);
+        groupedNewWords = new Map<string, Map<string, number>>();
         nullchars = config.get<string>("nullChars", "");
         let defaultSeletors = new Map<string, string[]>();
         defaultSeletors.set("http", [""]);

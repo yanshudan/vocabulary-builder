@@ -43,6 +43,7 @@ export async function previewMaterial() {
     }
     globals.newWords = finalmap;
     globals.groupedNewWords = await groupByLevel(globals.newWords);
+    // console.log(globals.groupedNewWords);
     //translate
     globals.chinese = await lookUpDictionary([...globals.newWords.keys()]);
     globals.newprov.refresh();

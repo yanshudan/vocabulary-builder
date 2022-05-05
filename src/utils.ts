@@ -3,6 +3,7 @@ import { TextDecoder, TextEncoder } from 'util';
 import * as vscode from 'vscode';
 import { globals } from './globals';
 import fetch from 'node-fetch';
+import { stringify } from 'querystring';
 
 
 export async function loadTextFile(fpath: string): Promise<string[]> {
@@ -101,24 +102,23 @@ export async function grabHtml(): Promise<string> {
     return result;
 };
 
-export async function groupByLevel(words: Map<string, number>):Promise<string> {
+export async function groupByLevel(words: Map<string, number>): Promise<Map<string,Map<string,number>>> {
     let lib;
-    let n = globals.wordlib.length;
-    let ret: Map<string, number>[] = new Array<Map<string, number>>(n + 1);
-    ret[n] = new Map<string, number>();
-    let m;
+    let ret: Map<string, Map<string, number>> = new Map<string, Map<string, number>>();
+    ret.set("Others", new Map<string, number>());
     for (let word of words) {
-        for (let i = 0; i < n; ++i) {
-            lib = globals.wordlib[i];
-            if (lib.includes(word[0])) {
-                if (ret[i] === undefined) {
-                    ret[i] = new Map<string, number>();
+        for (let level of globals.wordlib.keys()) {
+            lib = globals.wordlib.get(level);
+            if (lib!.includes(word[0])) {
+                if (!ret.has(level)) {
+                    ret.set(level, new Map<string, number>());
                 }
-                ret[i].set(word[0], word[1]);
+                ret.get(level)!.set(word[0], word[1]);
                 break;
             }
         }
-        ret[n].set(word[0], word[1]);
+        ret.get("Others")!.set(word[0], word[1]);
     }
-    return `{[${ret.map(m => JSON.stringify([...m.entries()])).join(",")}]}`;
+    //@ts-ignore
+    return ret;
 }

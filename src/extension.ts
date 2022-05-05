@@ -6,7 +6,7 @@ import { previewMaterial } from './previewMaterial';
 import { globals } from './globals';
 import { lookForSyn } from './lookForSyn';
 import { sampleSentences } from './sampleSentences';
-import { NewWordsProvider } from './jsonOutline';
+import { NewWordsProvider } from './newWordsProvider';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -20,9 +20,10 @@ export async function activate(context: vscode.ExtensionContext) {
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
 	// vscode.window.registerTreeDataProvider("vocabulary-builder-view", globals.myprod);
+	globals.newprov = new NewWordsProvider(context);
 	let knownWordsView = vscode.window.createTreeView("knownWords", { "treeDataProvider": globals.knownprov });
 	//TODO: add custom sort rules
-	let newWordsView = vscode.window.createTreeView("newWords", { "treeDataProvider": new NewWordsProvider(context), canSelectMany: true });
+	let newWordsView = vscode.window.createTreeView("newWords", { "treeDataProvider":globals.newprov, canSelectMany: true });
 	let synonymsView = vscode.window.createTreeView("Synonyms", { "treeDataProvider": globals.synprov });
 	// let samplesView = vscode.window.createTreeView("Samples", { "treeDataProvider": globals.samprov });
 	vscode.commands.registerCommand('vocabulary-builder.previewMaterial', previewMaterial);

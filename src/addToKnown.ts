@@ -10,6 +10,8 @@ export function addToKnown(word?: string) {
     if (word === undefined) {
         const sel = vscode.window.activeTextEditor?.selections ?? [];
         text = sel.map(s => vscode.window.activeTextEditor?.document.getText(s) ?? "");
+    } else if(typeof(word)==='number') {
+        text = [globals.newprov.getTreeItem(word)!.label as string];
     } else {
         text = [word];
     }
@@ -20,8 +22,10 @@ export function addToKnown(word?: string) {
         }
     }
     for (let w of unique) {
-        if (globals.newWords.has(w)) {
-            globals.newWords.delete(w);
+        for (let k of globals.groupedNewWords.keys()) { 
+            if (globals.groupedNewWords.get(k)!.has(w)) {
+                globals.groupedNewWords.get(k)!.delete(w);
+            }
         }
     }
     globals.newprov.refresh();
