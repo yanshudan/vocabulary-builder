@@ -78,7 +78,8 @@ export class SynonymsProvider implements vscode.TreeDataProvider<Entry> {
 //         return new vscode.TreeItem(globals.samples[index]);
 //     };
 // };
-type NewEntry= string;
+
+type NewEntry = string;
 export class NewWordsProvider implements vscode.TreeDataProvider<NewEntry> {
     private _onDidChangeTreeData: vscode.EventEmitter<NewEntry | null> = new vscode.EventEmitter<NewEntry | null>();
     readonly onDidChangeTreeData: vscode.Event<NewEntry | null> = this._onDidChangeTreeData.event;
@@ -100,12 +101,20 @@ export class NewWordsProvider implements vscode.TreeDataProvider<NewEntry> {
         const count = globals.newWords.get(index) ?? 0;
         const keys = [...globals.newWords.keys()];
         let i: number = keys.indexOf(index);
-        let ret = new vscode.TreeItem(index + "   " + globals.chinese[i]);
+        let ret = new vscode.TreeItem(index);
         ret.command = {
             command: 'vocabulary-builder.innerWrapper',
             title: 'test title',
             arguments: [index]
         };
+        //TODO: add "pick to known" icon
+        // ret.iconPath = {
+        //     light: globals.rootpath + '/add.svg',
+        //     dark: globals.rootpath + '/add.svg'
+        // };
+        ret.label = index;
+        ret.description = count.toString()+" times";
+        ret.tooltip = globals.chinese[i];
         return ret;
     };
 };

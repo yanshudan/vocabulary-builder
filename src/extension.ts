@@ -20,6 +20,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	// The commandId parameter must match the command field in package.json
 	// vscode.window.registerTreeDataProvider("vocabulary-builder-view", globals.myprod);
 	let knownWordsView = vscode.window.createTreeView("knownWords", { "treeDataProvider": globals.knownprov });
+	//TODO: add custom sort rules
 	let newWordsView = vscode.window.createTreeView("newWords", { "treeDataProvider": globals.newprov });
 	let synonymsView = vscode.window.createTreeView("Synonyms", { "treeDataProvider": globals.synprov });
 	// let samplesView = vscode.window.createTreeView("Samples", { "treeDataProvider": globals.samprov });

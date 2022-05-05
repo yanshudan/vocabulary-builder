@@ -19,7 +19,6 @@ export async function writeTextFile(fpath: string, content: string[]): Promise<v
 }
 
 export function getRenderStr(freq: Map<string, number>, chinese: string[]): string[] {
-    //TODO: better formatting
     let ret: string[] = [];
     let count = 0, curr = 2, total = 90;
     let nc = total / (curr + 3 + 5);
