@@ -20,6 +20,20 @@
     "icon": "",
     "main": "./out/extension.js",
     "contributes": {
+        "menus": {
+            "view/title": [
+                {
+                    "command": "vocabulary-builder.addToKnown",
+                    "when": "view == newWords"
+                }
+            ],
+            "view/item/context": [
+                {
+                    "command": "vocabulary-builder.addToKnown",
+                    "when": "viewItem == newWord"
+                }
+            ]
+        },
         "viewsContainers": {
             "activitybar": [
                 {

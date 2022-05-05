@@ -115,6 +115,7 @@ export class NewWordsProvider implements vscode.TreeDataProvider<NewEntry> {
         ret.label = index;
         ret.description = count.toString()+" times";
         ret.tooltip = globals.chinese[i];
+        ret.contextValue = "newWord";
         return ret;
     };
 };
