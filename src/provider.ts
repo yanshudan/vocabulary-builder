@@ -1,6 +1,5 @@
 import * as vscode from "vscode";
 import { globals } from "./globals";
-import * as json from 'jsonc-parser';
 
 type Entry = number;
 

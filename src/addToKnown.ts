@@ -1,5 +1,3 @@
-import path = require('path');
-import { TextDecoder, TextEncoder } from 'util';
 import * as vscode from 'vscode';
 import { globals } from './globals';
 import { writeTextFile } from './utils';

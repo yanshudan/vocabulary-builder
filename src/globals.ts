@@ -1,4 +1,3 @@
-import path = require("path");
 import { TextEncoder } from "util";
 import { Uri, workspace, WorkspaceConfiguration } from "vscode";
 import { NewWordsProvider } from "./newWordsProvider";

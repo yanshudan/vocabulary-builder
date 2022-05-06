@@ -3,7 +3,6 @@ import { TextDecoder, TextEncoder } from 'util';
 import * as vscode from 'vscode';
 import { globals } from './globals';
 import fetch from 'node-fetch';
-import { stringify } from 'querystring';
 
 
 export async function loadTextFile(fpath: string): Promise<string[]> {
