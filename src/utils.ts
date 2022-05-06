@@ -46,7 +46,7 @@ export function getRenderStr(freq: Map<string, number>, translated: Map<string, 
             ++i;
         }
     } catch (e) {
-        vscode.window.showInformationMessage(JSON.stringify(e));
+        console.log(e);
     }
     ret = ret.concat(["-------" + i.toString()]);
     return ret;
