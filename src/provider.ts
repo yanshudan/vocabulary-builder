@@ -16,11 +16,12 @@ export class KnownWordsProvider implements vscode.TreeDataProvider<Entry> {
     }
     getChildren(index: Entry): vscode.ProviderResult<Entry[]> {
         if (index === undefined) {
-            return [...globals.knownWords.keys()];
+            return [-1,...globals.knownWords.keys()];
         }
         return [index];
     };
     getTreeItem(index: Entry): vscode.TreeItem | Thenable<vscode.TreeItem> {
+        if (index === -1) { index = 0; }
         let ret = new vscode.TreeItem(globals.knownWords[index]);
         ret.command = {
             command: 'vocabulary-builder.innerWrapper',

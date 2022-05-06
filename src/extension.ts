@@ -7,6 +7,7 @@ import { globals } from './globals';
 import { lookForSyn } from './lookForSyn';
 import { sampleSentences } from './sampleSentences';
 import { NewWordsProvider } from './newWordsProvider';
+import { addToGood, dumpGoodWords } from './addToGood';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -24,10 +25,13 @@ export async function activate(context: vscode.ExtensionContext) {
 	let knownWordsView = vscode.window.createTreeView("knownWords", { "treeDataProvider": globals.knownprov });
 	//TODO: add custom sort rules
 	let newWordsView = vscode.window.createTreeView("newWords", { "treeDataProvider":globals.newprov, canSelectMany: true });
+	let goodWordsView = vscode.window.createTreeView("goodWords", { "treeDataProvider":globals.goodprov, canSelectMany: true });
 	let synonymsView = vscode.window.createTreeView("Synonyms", { "treeDataProvider": globals.synprov });
 	// let samplesView = vscode.window.createTreeView("Samples", { "treeDataProvider": globals.samprov });
 	vscode.commands.registerCommand('vocabulary-builder.previewMaterial', previewMaterial);
 	vscode.commands.registerCommand("vocabulary-builder.addToKnown", addToKnown);
+	vscode.commands.registerCommand("vocabulary-builder.addToGood", addToGood);
+	vscode.commands.registerCommand("vocabulary-builder.dumpGoodWords", dumpGoodWords);
 	vscode.commands.registerCommand("vocabulary-builder.lookForSyn", async () => await lookForSyn());
 	vscode.commands.registerCommand("vocabulary-builder.getSampleSentences", async (word) => await sampleSentences(word));
 	vscode.commands.registerCommand("vocabulary-builder.innerWrapper", async (word) => {

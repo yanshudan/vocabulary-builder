@@ -1,5 +1,6 @@
 import { TextEncoder } from "util";
 import { Uri, workspace, WorkspaceConfiguration } from "vscode";
+import { GoodWordsProvider } from "./goodWordsProvider";
 import { NewWordsProvider } from "./newWordsProvider";
 import { KnownWordsProvider, SynonymsProvider } from "./provider";
 import { loadTextFile } from "./utils";
@@ -26,15 +27,16 @@ export namespace globals {
     export let nullchars: string;
     
     //word lists
-    //TODO: add Research words, add/remove from lists
     //TODO: dump Research words to file
     //TODO: read from local text
     export let newWords: Map<string, number>;
+    export let goodWords: Map<string, string>;//word=>translation
     export let knownWords: string[];
     export let synonyms: string[] = [];
     //providers
     export let knownprov: KnownWordsProvider = new KnownWordsProvider();
     export let newprov: NewWordsProvider;
+    export let goodprov: GoodWordsProvider = new GoodWordsProvider();
     export let synprov: SynonymsProvider = new SynonymsProvider();
     //json format
     export let groupedNewWords: Map<string, Map<string, number>>;
@@ -65,6 +67,7 @@ export namespace globals {
         knownWords = await loadTextFile(fpath);
         synonyms = [];
         newWords = new Map<string, number>();
+        goodWords = new Map<string, string>();
         groupedNewWords = new Map<string, Map<string, number>>();
         nullchars = config.get<string>("nullChars", "");
         let defaultSeletors = new Map<string, string[]>();

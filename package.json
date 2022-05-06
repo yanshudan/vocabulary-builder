@@ -26,6 +26,18 @@
                     "command": "vocabulary-builder.addToKnown",
                     "when": "viewItem == newWord",
                     "group": "inline"
+                },
+                {
+                    "command": "vocabulary-builder.addToGood",
+                    "when": "viewItem == newWord",
+                    "group": "inline"
+                }
+            ],
+            "view/title": [
+                {
+                    "command": "vocabulary-builder.dumpGoodWords",
+                    "when": "view == goodWords",
+                    "group": "navigation"
                 }
             ]
         },
@@ -51,6 +63,10 @@
                     "name": "New Words"
                 },
                 {
+                    "id": "goodWords",
+                    "name": "Good Words"
+                },
+                {
                     "id": "knownWords",
                     "name": "Known Words"
                 },
@@ -66,11 +82,24 @@
                 "title": "Filter New Words In Material"
             },
             {
+                "command": "vocabulary-builder.dumpGoodWords",
+                "title": "Download good words as local file",
+                "icon":"download.svg"
+            },
+            {
                 "command": "vocabulary-builder.addToKnown",
                 "title": "Add To Known Words",
                 "icon": {
                     "dark": "add.svg",
                     "light": "add.svg"
+                }
+            },
+            {
+                "command": "vocabulary-builder.addToGood",
+                "title": "Add To Good Words",
+                "icon": {
+                    "dark": "good.svg",
+                    "light": "good.svg"
                 }
             },
             {
