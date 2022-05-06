@@ -121,17 +121,11 @@
         "configuration": {
             "title": "vocabBuilderConfig",
             "properties": {
-                "vocabBuilderConfig.knownWordsPath": {
+                "vocabBuilderConfig.rootPath": {
                     "type": "string",
                     "scope": "window",
-                    "default": "knownwords.txt",
-                    "description": "File to save known words."
-                },
-                "vocabBuilderConfig.outPath": {
-                    "type": "string",
-                    "scope": "window",
-                    "default": "out.txt",
-                    "description": "File to save new words with translation."
+                    "default": "",
+                    "description": "Folder to save your vocabulary"
                 },
                 "vocabBuilderConfig.translatorConfig": {
                     "type": "Map<string,string>",

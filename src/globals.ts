@@ -44,8 +44,8 @@ export namespace globals {
     export async function init() {
         //TODO: P1 Documentations in README.md and package.json
         config = workspace.getConfiguration("vocabBuilderConfig");
-        fpath = rootpath + "/" + config.get<string>("knownWordsPath", "knownxwords.txt");
-        outpath = rootpath + "/" + config.get<string>("outPath", "out.txt");
+        fpath = rootpath + "/knownWords.txt";
+        outpath = rootpath + "/newWords.txt";
         try {
             await workspace.fs.readFile(Uri.file(fpath));
         } catch {

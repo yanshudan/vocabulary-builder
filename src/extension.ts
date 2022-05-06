@@ -15,19 +15,26 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	vscode.window.showInformationMessage("Please pick a path to store your vocabulary");
-	const folders = vscode.workspace.workspaceFolders ?? [{uri:undefined}];
-	const picked = await vscode.window.showOpenDialog({
-		"canSelectFolders": true,
-		"canSelectFiles": false,
-		"canSelectMany": false,
-		"defaultUri": folders[0].uri
-	});
-	if (picked === undefined) {
-		vscode.window.showInformationMessage("No folders picked, please reload and pick one");
-		return;
+	let rootpath: string = vscode.workspace.getConfiguration("vocabBuilderConfig").get("rootPath", "");
+	if (rootpath === "") {
+		
+		vscode.window.showInformationMessage("Please pick a path to store your vocabulary");
+		const folders = vscode.workspace.workspaceFolders ?? [{uri:undefined}];
+		const picked = await vscode.window.showOpenDialog({
+			"canSelectFolders": true,
+			"canSelectFiles": false,
+			"canSelectMany": false,
+			"defaultUri": folders[0].uri
+		});
+		if (picked === undefined) {
+			vscode.window.showInformationMessage("No folders picked, please reload and pick one");
+			return;
+		}
+		globals.rootpath = picked[0].fsPath;
+		await vscode.workspace.getConfiguration("vocabBuilderConfig").update("rootPath", picked[0].fsPath);
+	} else {
+		globals.rootpath = rootpath;
 	}
-	globals.rootpath = picked[0].fsPath;
 
 	await globals.init();
 	console.log('vocabulary-builder is activated');
