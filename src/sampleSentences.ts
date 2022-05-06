@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import { WebviewPanel, window } from "vscode";
-
+import render from "dom-serializer";
 
 const agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36';
 const base = 'https://sentence.yourdictionary.com';
@@ -21,7 +21,7 @@ export async function sampleSentences(word?: string) {
     });
     if (response.status === 403) {
         window.showInformationMessage("Check your VPN");
-        return ;
+        return;
     }
     const html = await response.text();
     try {
@@ -29,9 +29,11 @@ export async function sampleSentences(word?: string) {
     } catch {
         view = window.createWebviewPanel("type", "Sample Sentences", { viewColumn: 1 });
     };
-    let begin = html.indexOf(`<ul class="sentences-list"`);
-    let end = html.indexOf("</ul", begin) + 4;
-    const htmlwihtouthead = "<!doctype html> <html><body>" + html.slice(begin, end) + "</body></html>";
+    const htmlparser2 = require("htmlparser2");
+    const CSSselect = require("css-select");
+    const dom = htmlparser2.parseDocument(html);
+    const sentences = CSSselect.selectAll("div.sentence-item", dom);
+    const htmlwihtouthead = "<!doctype html> <html><body>" + render(sentences).replaceAll("span","h3") + "</body></html>";
     view.webview.html = htmlwihtouthead;
     view.reveal();
     // // await writeTextFile(globals.outpath, [htmlwihtouthead]);

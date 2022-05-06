@@ -2,7 +2,7 @@
     "name": "vocabulary-builder",
     "displayName": "Vocabulary Builder",
     "description": "Filter out common English words in reading/listening materials to see a list of new words. Supports adding new known words  manually on  one click.",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "publisher": "DaiShuDan",
     "engines": {
         "vscode": "^1.66.0"
@@ -160,11 +160,11 @@
                     "scope": "window",
                     "default": {
                         "npr": [
-                            "transcript",
-                            "stroytext"
+                            "div.transcript",
+                            "div.stroytext"
                         ],
                         "scientificamerican": [
-                            "transcript__inner"
+                            "div.transcript__inner"
                         ]
                     },
                     "description": "Class names across sites"
@@ -199,8 +199,11 @@
     },
     "dependencies": {
         "axios": "^0.27.2",
+        "css-select": "^5.1.0",
         "dom-parser": "^0.1.6",
+        "dom-serializer": "^2.0.0",
         "encoding": "^0.1.13",
+        "htmlparser2": "^8.0.1",
         "jsonc-parser": "^3.0.0",
         "node-fetch": "^2.6.1",
         "powerthesaurus-api": "^2.0.3",

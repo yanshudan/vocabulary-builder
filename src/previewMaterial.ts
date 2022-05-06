@@ -1,26 +1,32 @@
 import { globals } from "./globals";
 import { getRenderStr, grabHtml, groupByLevel, loadTextFile, wordCount, writeTextFile } from "./utils";
 import * as vscode from 'vscode';
+
 import { lookUpDictionary } from "./lookUpDictionary";
+import render from "dom-serializer";
 async function getHtmlText(url: string): Promise<string> {
     //grab raw html
-    const html = await grabHtml(url);
+    let html = await grabHtml(url);
     if (html.length === 0) { return ""; }
 
     //extract text
-    var domParser = require('dom-parser');
-    const htmlstr = new domParser().parseFromString(html);
-    let rawtext: string = "";
     //TODO: P1 better html selectors to support all websites
-    if (globals.selector.length === 0) {
-        rawtext += (htmlstr.getElementsByAttribute("*", "*")[0] ?? { textContent: "" }).textContent;
-    } else {
+    const htmlparser2 = require("htmlparser2");
+    const CSSselect = require("css-select");
+    const dom = htmlparser2.parseDocument(html);
+    if (globals.selector.length !== 0) {
+        html = "";
         for (let sel of globals.selector) {
-            const content = htmlstr.getElementsByClassName(sel) as { textContent: string }[];
-            rawtext += content.map(e => e.textContent);
+            let doms = CSSselect.selectAll(sel, dom);
+            html += render(doms);
         }
+        html = "<body>" + html + "</body>";
     }
-    return rawtext;
+
+    var domParser = require('dom-parser');
+    let htmlstr = new domParser().parseFromString(html);
+    //dangerous, must config selectors for websites
+    return (htmlstr.getElementsByTagName("body")[0] ?? { textContent: "" }).textContent;
 }
 export async function previewMaterial() {
     // The code you place here will be executed every time your command is executed
