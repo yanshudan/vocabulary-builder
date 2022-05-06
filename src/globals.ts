@@ -1,5 +1,5 @@
 import { TextEncoder } from "util";
-import { Uri, workspace, WorkspaceConfiguration } from "vscode";
+import { Uri, window, workspace, WorkspaceConfiguration } from "vscode";
 import { GoodWordsProvider } from "./goodWordsProvider";
 import { NewWordsProvider } from "./newWordsProvider";
 import { KnownWordsProvider, SynonymsProvider } from "./provider";
@@ -15,7 +15,7 @@ export namespace globals {
     //wordlib
     export const basicWords: string[] = lemmas.concat(forms);
     export let wordlib: Map<string, string[]> = new Map<string, string[]>();
-    
+
     //configs
     export let config: WorkspaceConfiguration;
     export let fpath: string;
@@ -25,10 +25,8 @@ export namespace globals {
     export let selectors: Map<string, string[]> = new Map<string, string[]>();
     export let selector: string[];
     export let nullchars: string;
-    
+
     //word lists
-    //TODO: dump Research words to file
-    //TODO: read from local text
     export let newWords: Map<string, number>;
     export let goodWords: Map<string, string>;//word=>translation
     export let knownWords: string[];
@@ -42,12 +40,14 @@ export namespace globals {
     export let groupedNewWords: Map<string, Map<string, number>>;
     // export let samples: string[];
     // export let samprov: SamplesProvider = new SamplesProvider();
-    export let translated: Map<string,string>;
+    export let translated: Map<string, string>;
     export async function init() {
 
         const folders = workspace.workspaceFolders ?? [];
-        //TODO what if user doesn't open any folder?
-        if (folders.length === 0) { }
+        if (folders.length === 0) {
+            window.showInformationMessage("No folders are open in VS Code, please open a folder and reload to activate vocabulary builder");
+            return;
+        }
         rootpath = folders[0].uri.fsPath;
 
         config = workspace.getConfiguration("vocabBuilderConfig");
@@ -64,7 +64,7 @@ export namespace globals {
         wordlib.set("level2", ["tuh", "nuh", "puh", "duh", "mum", "cuh", "hoc", "ups"]);
 
         //words
-        knownWords = await loadTextFile(fpath);
+        knownWords = await (await loadTextFile(fpath)).split("\n");
         synonyms = [];
         newWords = new Map<string, number>();
         goodWords = new Map<string, string>();

@@ -5,10 +5,10 @@ import { globals } from './globals';
 import fetch from 'node-fetch';
 
 
-export async function loadTextFile(fpath: string): Promise<string[]> {
+export async function loadTextFile(fpath: string): Promise<string> {
     const fileUri = vscode.Uri.file(path.resolve(fpath));
     return await vscode.workspace.fs.readFile(fileUri).then(c => {
-        const res = new TextDecoder("utf-8").decode(c).split("\n");
+        const res = new TextDecoder("utf-8").decode(c);
         return res;
     });
 }
@@ -19,7 +19,7 @@ export async function writeTextFile(fpath: string, content: string[]): Promise<v
 }
 
 export function getRenderStr(freq: Map<string, number>, translated: Map<string, string>): string[] {
-    freq=new Map([...freq.entries()].sort((a, b) => a[0].length - b[0].length));
+    freq = new Map([...freq.entries()].sort((a, b) => a[0].length - b[0].length));
     let ret: string[] = [];
     let count = 0, curr = 2, total = 90;
     let nc = total / (curr + 3 + 5);
@@ -70,13 +70,8 @@ export async function wordCount(rawtext: string): Promise<Map<string, number>> {
     return freq;
 };
 
-export async function grabHtml(): Promise<string> {
-    const url: string = await vscode.window.showInputBox({ title: "URL of the material", ignoreFocusOut: true }).then(async url => {
-        if (url === undefined) {
-            return "";
-        }
-        return url;
-    });
+export async function grabHtml(url: string): Promise<string> {
+
     let response;
     try {
 
@@ -102,7 +97,7 @@ export async function grabHtml(): Promise<string> {
     return result;
 };
 
-export async function groupByLevel(words: Map<string, number>): Promise<Map<string,Map<string,number>>> {
+export async function groupByLevel(words: Map<string, number>): Promise<Map<string, Map<string, number>>> {
     let lib;
     let ret: Map<string, Map<string, number>> = new Map<string, Map<string, number>>();
     ret.set("Others", new Map<string, number>());
