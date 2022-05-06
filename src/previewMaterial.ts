@@ -10,7 +10,6 @@ async function getHtmlText(url: string): Promise<string> {
     if (html.length === 0) { return ""; }
 
     //extract text
-    //TODO: P1 better html selectors to support all websites
     const htmlparser2 = require("htmlparser2");
     const CSSselect = require("css-select");
     const dom = htmlparser2.parseDocument(html);

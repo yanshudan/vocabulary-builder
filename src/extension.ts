@@ -45,7 +45,6 @@ export async function activate(context: vscode.ExtensionContext) {
 	// vscode.window.registerTreeDataProvider("vocabulary-builder-view", globals.myprod);
 	globals.newprov = new NewWordsProvider(context);
 	let knownWordsView = vscode.window.createTreeView("knownWords", { "treeDataProvider": globals.knownprov });
-	//TODO: P3 add custom sort rules
 	let newWordsView = vscode.window.createTreeView("newWords", { "treeDataProvider": globals.newprov, canSelectMany: true });
 	let goodWordsView = vscode.window.createTreeView("goodWords", { "treeDataProvider": globals.goodprov, canSelectMany: true });
 	let synonymsView = vscode.window.createTreeView("Synonyms", { "treeDataProvider": globals.synprov });

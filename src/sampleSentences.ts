@@ -7,7 +7,6 @@ const base = 'https://sentence.yourdictionary.com';
 let view: WebviewPanel;
 export async function sampleSentences(word?: string) {
     //TODO: P2 call NLP services to get sample sentences
-    //TODO: P3 render prettier webview
     if (word === undefined) {
         const sel = window.activeTextEditor?.selection;
         word = window.activeTextEditor?.document.getText(sel) ?? "";

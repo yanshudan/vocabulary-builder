@@ -58,7 +58,7 @@ export namespace globals {
         await workspace.fs.writeFile(Uri.file(outpath), new TextEncoder().encode(""));
 
         //word lib
-        //TODO: P0 add CET4, IELTS/TOEFL, GRE vocabs
+        //TODO: P0 add IELTS/TOEFL, GRE vocabs
         wordlib.set("Common", basicWords);
         wordlib.set("CET-4", CET4);
         wordlib.set("CET-6(TODO)", CET6);
@@ -70,7 +70,7 @@ export namespace globals {
         goodWords = new Map<string, string>();
         groupedNewWords = new Map<string, Map<string, number>>();
         translated = new Map<string, string>();
-        
+
         //configs
         nullchars = config.get<string>("nullChars", "");
         let defaultSeletors = new Map<string, string[]>();
