@@ -42,7 +42,7 @@ export namespace globals {
     // export let samprov: SamplesProvider = new SamplesProvider();
     export let translated: Map<string, string>;
     export async function init() {
-
+        //TODO: P1 Documentations in README.md and package.json
         const folders = workspace.workspaceFolders ?? [];
         if (folders.length === 0) {
             window.showInformationMessage("No folders are open in VS Code, please open a folder and reload to activate vocabulary builder");
@@ -59,7 +59,7 @@ export namespace globals {
             await workspace.fs.writeFile(Uri.file(fpath), new TextEncoder().encode(""));
         }
         await workspace.fs.writeFile(Uri.file(outpath), new TextEncoder().encode(""));
-        //TODO: add CET4, IELTS/TOEFL, GRE vocabs
+        //TODO: P0 add CET4, IELTS/TOEFL, GRE vocabs
         wordlib.set("level1", ["ono", "val", "abs", "eke", "sow", "uhh", "sss", "zzz", "hid", "hud", "jam", "www", "org"]);
         wordlib.set("level2", ["tuh", "nuh", "puh", "duh", "mum", "cuh", "hoc", "ups"]);
 

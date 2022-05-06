@@ -6,8 +6,8 @@ const agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.3
 const base = 'https://sentence.yourdictionary.com';
 let view: WebviewPanel;
 export async function sampleSentences(word?: string) {
-    //TODO: call NLP services to get sample sentences
-    //TODO: render prettier webview
+    //TODO: P2 call NLP services to get sample sentences
+    //TODO: P3 render prettier webview
     if (word === undefined) {
         const sel = window.activeTextEditor?.selection;
         word = window.activeTextEditor?.document.getText(sel) ?? "";

@@ -11,7 +11,7 @@ async function getHtmlText(url: string): Promise<string> {
     var domParser = require('dom-parser');
     const htmlstr = new domParser().parseFromString(html);
     let rawtext: string = "";
-    //TODO: better html selectors to support all websites
+    //TODO: P1 better html selectors to support all websites
     if (globals.selector.length === 0) {
         rawtext += (htmlstr.getElementsByAttribute("*", "*")[0] ?? { textContent: "" }).textContent;
     } else {

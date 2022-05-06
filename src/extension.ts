@@ -16,7 +16,6 @@ export async function activate(context: vscode.ExtensionContext) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	const folders = vscode.workspace.workspaceFolders ?? [];
-	//TODO what if user doesn't open any folder?
 	if (folders.length === 0) {
 		vscode.window.showInformationMessage("No folders are open in VS Code, please open a folder and reload to activate vocabulary builder");
 		return;
@@ -29,7 +28,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	// vscode.window.registerTreeDataProvider("vocabulary-builder-view", globals.myprod);
 	globals.newprov = new NewWordsProvider(context);
 	let knownWordsView = vscode.window.createTreeView("knownWords", { "treeDataProvider": globals.knownprov });
-	//TODO: add custom sort rules
+	//TODO: P2 add custom sort rules
 	let newWordsView = vscode.window.createTreeView("newWords", { "treeDataProvider":globals.newprov, canSelectMany: true });
 	let goodWordsView = vscode.window.createTreeView("goodWords", { "treeDataProvider":globals.goodprov, canSelectMany: true });
 	let synonymsView = vscode.window.createTreeView("Synonyms", { "treeDataProvider": globals.synprov });

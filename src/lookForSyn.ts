@@ -20,7 +20,7 @@ export async function lookForSyn(word?: string) {
     const html = await response.text();
     var domParser = require('dom-parser');
     const htmlstr = new domParser().parseFromString(html);
-    //TODO: look for class name
+    //TODO: P1 look for class name
     let words = htmlstr.getElementsByClassName(globals.config.get<string>("synSelctor", "tz_su ")) as { textContent: string }[];
     globals.synonyms = words.map(e => e.textContent);
     globals.synprov.refresh();
