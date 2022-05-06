@@ -15,11 +15,20 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	const folders = vscode.workspace.workspaceFolders ?? [];
-	if (folders.length === 0) {
-		vscode.window.showInformationMessage("No folders are open in VS Code, please open a folder and reload to activate vocabulary builder");
+	vscode.window.showInformationMessage("Please pick a path to store your vocabulary");
+	const folders = vscode.workspace.workspaceFolders ?? [{uri:undefined}];
+	const picked = await vscode.window.showOpenDialog({
+		"canSelectFolders": true,
+		"canSelectFiles": false,
+		"canSelectMany": false,
+		"defaultUri": folders[0].uri
+	});
+	if (picked === undefined) {
+		vscode.window.showInformationMessage("No folders picked, please reload and pick one");
 		return;
 	}
+	globals.rootpath = picked[0].fsPath;
+
 	await globals.init();
 	console.log('vocabulary-builder is activated');
 	// The command has been defined in the package.json file
@@ -28,9 +37,9 @@ export async function activate(context: vscode.ExtensionContext) {
 	// vscode.window.registerTreeDataProvider("vocabulary-builder-view", globals.myprod);
 	globals.newprov = new NewWordsProvider(context);
 	let knownWordsView = vscode.window.createTreeView("knownWords", { "treeDataProvider": globals.knownprov });
-	//TODO: P2 add custom sort rules
-	let newWordsView = vscode.window.createTreeView("newWords", { "treeDataProvider":globals.newprov, canSelectMany: true });
-	let goodWordsView = vscode.window.createTreeView("goodWords", { "treeDataProvider":globals.goodprov, canSelectMany: true });
+	//TODO: P3 add custom sort rules
+	let newWordsView = vscode.window.createTreeView("newWords", { "treeDataProvider": globals.newprov, canSelectMany: true });
+	let goodWordsView = vscode.window.createTreeView("goodWords", { "treeDataProvider": globals.goodprov, canSelectMany: true });
 	let synonymsView = vscode.window.createTreeView("Synonyms", { "treeDataProvider": globals.synprov });
 	// let samplesView = vscode.window.createTreeView("Samples", { "treeDataProvider": globals.samprov });
 	vscode.commands.registerCommand('vocabulary-builder.previewMaterial', previewMaterial);

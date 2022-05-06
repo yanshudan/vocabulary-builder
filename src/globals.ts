@@ -43,13 +43,6 @@ export namespace globals {
     export let translated: Map<string, string>;
     export async function init() {
         //TODO: P1 Documentations in README.md and package.json
-        const folders = workspace.workspaceFolders ?? [];
-        if (folders.length === 0) {
-            window.showInformationMessage("No folders are open in VS Code, please open a folder and reload to activate vocabulary builder");
-            return;
-        }
-        rootpath = folders[0].uri.fsPath;
-
         config = workspace.getConfiguration("vocabBuilderConfig");
         fpath = rootpath + "/" + config.get<string>("knownWordsPath", "knownxwords.txt");
         outpath = rootpath + "/" + config.get<string>("outPath", "out.txt");
