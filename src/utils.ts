@@ -18,7 +18,8 @@ export async function writeTextFile(fpath: string, content: string[]): Promise<v
     await vscode.workspace.fs.writeFile(fileUri, out);
 }
 
-export function getRenderStr(freq: Map<string, number>, translated: Map<string,string>): string[] {
+export function getRenderStr(freq: Map<string, number>, translated: Map<string, string>): string[] {
+    freq=new Map([...freq.entries()].sort((a, b) => a[0].length - b[0].length));
     let ret: string[] = [];
     let count = 0, curr = 2, total = 90;
     let nc = total / (curr + 3 + 5);

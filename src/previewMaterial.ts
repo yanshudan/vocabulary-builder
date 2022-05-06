@@ -15,6 +15,7 @@ export async function previewMaterial() {
     var domParser = require('dom-parser');
     const htmlstr = new domParser().parseFromString(html);
     let rawtext: string = "";
+    //TODO: better html selectors to support all websites
     if (globals.selector.length === 0) {
         rawtext += (htmlstr.getElementsByAttribute("*", "*")[0] ?? { textContent: "" }).textContent;
     } else {
@@ -27,15 +28,17 @@ export async function previewMaterial() {
     //wordcount, sort by length and freq
     const freq = await wordCount(rawtext);
     const mapSort1 = new Map([...freq.entries()].sort((a, b) => b[1] - a[1]));
-    let finalmap = new Map([...mapSort1.entries()].sort((a, b) => a[0].length - b[0].length));
+    let finalmap = mapSort1;
 
     //pick known words
-    const picked = await vscode.window.showQuickPick([...finalmap.keys()], { canPickMany: true, ignoreFocusOut: true, "title": "Choose words that you already know" }) ?? [];
+    const rawpick = await vscode.window.showQuickPick([...finalmap.entries()].map(e=>`${e[0]} ${e[1]} times`), { canPickMany: true, ignoreFocusOut: true, "title": "Choose words that you already know" }) ?? [];
+    const picked = rawpick.map(e => e.split(" ")[0]);
     console.log("user picked:");
     console.log(picked);
 
     //add to lists
     globals.knownWords = globals.knownWords.concat(picked);
+    globals.knownprov.refresh();
     writeTextFile(globals.fpath, globals.knownWords);
 
     for (let pick of picked) {

@@ -25,6 +25,10 @@ export namespace globals {
     export let selector: string[];
     export let nullchars: string;
     
+    //word lists
+    //TODO: add Research words, add/remove from lists
+    //TODO: dump Research words to file
+    //TODO: read from local text
     export let newWords: Map<string, number>;
     export let knownWords: string[];
     export let synonyms: string[] = [];
@@ -40,6 +44,8 @@ export namespace globals {
     export async function init() {
 
         const folders = workspace.workspaceFolders ?? [];
+        //TODO what if user doesn't open any folder?
+        if (folders.length === 0) { }
         rootpath = folders[0].uri.fsPath;
 
         config = workspace.getConfiguration("vocabBuilderConfig");
