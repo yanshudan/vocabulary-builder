@@ -7,8 +7,8 @@ class responseType {
 class responseListType {
     data: responseType[] = [];
 }
-export async function lookUpDictionary(words?: string[], kind?: string): Promise<Map<string, string>> {
-    let ret = new Map<string, string>();
+export async function lookUpDictionary(words?: string[], kind?: string): Promise<string[]> {
+    let ret:string[] = [];
     if (words === undefined) {
         const sel = window.activeTextEditor?.selections ?? [];
         let tmp = new Set<string>();
@@ -19,7 +19,7 @@ export async function lookUpDictionary(words?: string[], kind?: string): Promise
         words = [...tmp.keys()];
         if (words === []) {
             window.showInformationMessage("You didn't select any word");
-            return ret;
+            return [];
         }
     }
     const req = words.map(e => {
@@ -48,7 +48,8 @@ export async function lookUpDictionary(words?: string[], kind?: string): Promise
         return response.data.map((e: responseType) => e.translations[0].text.replaceAll(" ", ""));
     });
     for (let i = 0; i < words.length; ++i){
-        ret.set(words[i], translated[i]);
+        globals.translated.set(words[i], translated[i]);
     }
+    globals.newprov.refresh();
     return ret;
 };

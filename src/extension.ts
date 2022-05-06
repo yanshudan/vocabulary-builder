@@ -8,6 +8,7 @@ import { lookForSyn } from './lookForSyn';
 import { sampleSentences } from './sampleSentences';
 import { NewWordsProvider } from './newWordsProvider';
 import { addToGood, dumpGoodWords } from './addToGood';
+import { lookUpDictionary } from './lookUpDictionary';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -67,7 +68,7 @@ export async function activate(context: vscode.ExtensionContext) {
 			progress.report({ increment: 0 });
 			let p1 = sampleSentences(word);
 			let p2 = lookForSyn(word);
-
+			lookUpDictionary([word]);
 
 			setTimeout(() => {
 				progress.report({ increment: 10, message: "Sending Requests" });

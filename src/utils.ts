@@ -61,7 +61,7 @@ export async function wordCount(rawtext: string): Promise<Map<string, number>> {
     const wordlist = words.split(" ");
     let freq = new Map<string, number>();
     for (let word of wordlist) {
-        if (word.length < 3 || word.includes("'") || globals.basicWords.includes(word) || globals.knownWords.includes(word)) {
+        if (word.length < 3 || word.includes("'") ||  globals.knownWords.includes(word)) {
             continue;
         }
         let val = freq.get(word) ?? 0;
@@ -102,6 +102,7 @@ export async function groupByLevel(words: Map<string, number>): Promise<Map<stri
     let ret: Map<string, Map<string, number>> = new Map<string, Map<string, number>>();
     ret.set("Others", new Map<string, number>());
     for (let word of words) {
+        let hit = false;
         for (let level of globals.wordlib.keys()) {
             lib = globals.wordlib.get(level);
             if (lib!.includes(word[0])) {
@@ -109,10 +110,13 @@ export async function groupByLevel(words: Map<string, number>): Promise<Map<stri
                     ret.set(level, new Map<string, number>());
                 }
                 ret.get(level)!.set(word[0], word[1]);
+                hit = true;
                 break;
             }
         }
-        ret.get("Others")!.set(word[0], word[1]);
+        if (!hit) {
+            ret.get("Others")!.set(word[0], word[1]);
+        }
     }
     return ret;
 }

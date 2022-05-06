@@ -63,7 +63,6 @@ export async function previewMaterial() {
         finalmap.delete(pick);
     }
     globals.newWords = finalmap;
-    globals.translated = await lookUpDictionary([...globals.newWords.keys()]);
     globals.groupedNewWords = await groupByLevel(globals.newWords);
     // console.log(globals.groupedNewWords);
     //translate
