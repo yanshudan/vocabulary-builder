@@ -7,7 +7,8 @@ class responseType {
 class responseListType {
     data: responseType[] = [];
 }
-export async function lookUpDictionary(words?: string[], kind?: string): Promise<string[]> {
+export async function lookUpDictionary(words?: string[], kind?: string): Promise<Map<string, string>> {
+    let ret = new Map<string, string>();
     if (words === undefined) {
         const sel = window.activeTextEditor?.selections ?? [];
         let tmp = new Set<string>();
@@ -18,7 +19,7 @@ export async function lookUpDictionary(words?: string[], kind?: string): Promise
         words = [...tmp.keys()];
         if (words === []) {
             window.showInformationMessage("You didn't select any word");
-            return [];
+            return ret;
         }
     }
     const req = words.map(e => {
@@ -26,7 +27,7 @@ export async function lookUpDictionary(words?: string[], kind?: string): Promise
     });
     const axios = require('axios').default;
     const { v4: uuidv4 } = require('uuid');
-    return await axios({
+    const translated= await axios({
         baseURL: globals.translatorConfig.get("endpoint"),
         url: '/translate',
         method: 'post',
@@ -46,4 +47,8 @@ export async function lookUpDictionary(words?: string[], kind?: string): Promise
     }).then(function (response: responseListType) {
         return response.data.map((e: responseType) => e.translations[0].text.replaceAll(" ", ""));
     });
+    for (let i = 0; i < words.length; ++i){
+        ret.set(words[i], translated[i]);
+    }
+    return ret;
 };

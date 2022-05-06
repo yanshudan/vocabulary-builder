@@ -73,7 +73,7 @@ export class NewWordsProvider implements vscode.TreeDataProvider<number> {
 				treeItem.description = label[1] + " times";
 				treeItem.label = label[0];
 				treeItem.contextValue = "newWord";
-				treeItem.tooltip = "TODO: chinese translation";
+				treeItem.tooltip = globals.translated.get(label[0]);
 			}
 			return treeItem;
 		}

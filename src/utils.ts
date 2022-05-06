@@ -19,7 +19,7 @@ export async function writeTextFile(fpath: string, content: string[]): Promise<v
     await vscode.workspace.fs.writeFile(fileUri, out);
 }
 
-export function getRenderStr(freq: Map<string, number>, chinese: string[]): string[] {
+export function getRenderStr(freq: Map<string, number>, translated: Map<string,string>): string[] {
     let ret: string[] = [];
     let count = 0, curr = 2, total = 90;
     let nc = total / (curr + 3 + 5);
@@ -27,7 +27,7 @@ export function getRenderStr(freq: Map<string, number>, chinese: string[]): stri
     let tmp: string = "";
     try {
         for (let item of freq) {
-            const chi = chinese[i];
+            const trans = translated.get(item[0])!;
             if (item[0].length > curr) {
                 ret = ret.concat([tmp]);
                 tmp = "";
@@ -36,7 +36,7 @@ export function getRenderStr(freq: Map<string, number>, chinese: string[]): stri
                 curr += 1;
                 nc = total / (curr + 3 + 5);
             }
-            tmp += item[0] + "," + " ".repeat(curr + 3 - item[0].length - item[1].toString().length) + item[1] + "," + chi + "　".repeat(Math.max(5 - chi.length, 0)) + ",";
+            tmp += item[0] + "," + " ".repeat(curr + 3 - item[0].length - item[1].toString().length) + item[1] + "," + trans + "　".repeat(Math.max(5 - trans.length, 0)) + ",";
             count++;
             if (count >= nc) {
                 ret = ret.concat([tmp]);
@@ -119,6 +119,5 @@ export async function groupByLevel(words: Map<string, number>): Promise<Map<stri
         }
         ret.get("Others")!.set(word[0], word[1]);
     }
-    //@ts-ignore
     return ret;
 }
