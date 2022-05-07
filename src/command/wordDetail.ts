@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { lookForSyn } from "./lookForSyn";
-import { lookUpDictionary } from "./lookUpDictionary";
-import { sampleSentences } from "./sampleSentences";
+import { lookUpDictionary } from "./lookForTranslation";
+import { sampleSentences } from "./lookForSamples";
 export async function wordDetail(word:string) {
     vscode.window.withProgress({
         location: vscode.ProgressLocation.Notification,

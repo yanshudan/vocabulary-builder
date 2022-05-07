@@ -9,7 +9,7 @@ export async function wordCount(rawtext: string): Promise<Map<string, number>> {
     const wordlist = words.split(" ");
     let freq = new Map<string, number>();
     for (let word of wordlist) {
-        if (word.length < 3 || word.includes("'") || globals.knownWords.includes(word)) {
+        if (word.length < 3 || word.includes("'") || globals.knownWords.includes(word) || globals.basicWords.includes(word)) {
             continue;
         }
         let val = freq.get(word) ?? 0;

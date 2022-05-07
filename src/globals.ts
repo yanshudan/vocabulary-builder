@@ -57,7 +57,7 @@ export namespace globals {
 
         //word lib
         //TODO: P0 add IELTS/TOEFL, GRE vocabs
-        wordlib.set("Common", basicWords);
+        wordlib.set("Common", commonWords);
         wordlib.set("CET-4", CET4);
         wordlib.set("CET-6(TODO)", CET6);
         wordlib.set("TOEFL(TODO)", TOEFL);

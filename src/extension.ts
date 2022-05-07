@@ -5,10 +5,10 @@ import { addToKnown } from './command/addToKnown';
 import { previewMaterial } from './command/previewMaterial';
 import { globals } from './globals';
 import { lookForSyn } from './command/lookForSyn';
-import { sampleSentences } from './command/sampleSentences';
+import { sampleSentences } from './command/lookForSamples';
 import { NewWordsProvider } from './provider/newWordsProvider';
 import { addToGood, dumpGoodWords } from './command/addToGood';
-import { lookUpDictionary } from './command/lookUpDictionary';
+import { lookUpDictionary } from './command/lookForTranslation';
 import { wordDetail } from './command/wordDetail';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
