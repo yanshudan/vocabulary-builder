@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as json from 'jsonc-parser';
 import * as path from 'path';
-import { globals } from './globals';
+import { globals } from '../globals';
 
 export class NewWordsProvider implements vscode.TreeDataProvider<number> {
 

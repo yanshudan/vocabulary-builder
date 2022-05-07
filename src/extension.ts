@@ -6,7 +6,7 @@ import { previewMaterial } from './previewMaterial';
 import { globals } from './globals';
 import { lookForSyn } from './lookForSyn';
 import { sampleSentences } from './sampleSentences';
-import { NewWordsProvider } from './newWordsProvider';
+import { NewWordsProvider } from './provider/newWordsProvider';
 import { addToGood, dumpGoodWords } from './addToGood';
 import { lookUpDictionary } from './lookUpDictionary';
 // this method is called when your extension is activated

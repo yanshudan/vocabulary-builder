@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { globals } from "./globals";
+import { globals } from "../globals";
 
 export class GoodWordsProvider implements vscode.TreeDataProvider<string> {
     private _onDidChangeTreeData: vscode.EventEmitter<string | null> = new vscode.EventEmitter<string | null>();
