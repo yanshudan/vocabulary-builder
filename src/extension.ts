@@ -9,6 +9,7 @@ import { sampleSentences } from './command/sampleSentences';
 import { NewWordsProvider } from './provider/newWordsProvider';
 import { addToGood, dumpGoodWords } from './command/addToGood';
 import { lookUpDictionary } from './command/lookUpDictionary';
+import { wordDetail } from './command/wordDetail';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -18,9 +19,8 @@ export async function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	let rootpath: string = vscode.workspace.getConfiguration("vocabBuilderConfig").get("rootPath", "");
 	if (rootpath === "") {
-		
 		vscode.window.showInformationMessage("Please pick a path to store your vocabulary");
-		const folders = vscode.workspace.workspaceFolders ?? [{uri:undefined}];
+		const folders = vscode.workspace.workspaceFolders ?? [{ uri: undefined }];
 		const picked = await vscode.window.showOpenDialog({
 			"canSelectFolders": true,
 			"canSelectFiles": false,
@@ -55,39 +55,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand("vocabulary-builder.dumpGoodWords", dumpGoodWords);
 	vscode.commands.registerCommand("vocabulary-builder.lookForSyn", async () => await lookForSyn());
 	vscode.commands.registerCommand("vocabulary-builder.getSampleSentences", async (word) => await sampleSentences(word));
-	vscode.commands.registerCommand("vocabulary-builder.innerWrapper", async (word) => {
-		vscode.window.withProgress({
-			location: vscode.ProgressLocation.Notification,
-			title: "Fetching data...",
-			cancellable: true
-		}, async (progress, token) => {
-			token.onCancellationRequested(() => {
-				console.log("Request Canceled by user");
-			});
-			progress.report({ increment: 0 });
-			let p1 = sampleSentences(word);
-			let p2 = lookForSyn(word);
-			lookUpDictionary([word]);
-
-			setTimeout(() => {
-				progress.report({ increment: 10, message: "Sending Requests" });
-			}, 1000);
-			await p2;
-			setTimeout(() => {
-				progress.report({ increment: 40, message: "Fetched Synonyms!" });
-			}, 1000);
-			await p1;
-			setTimeout(() => {
-				progress.report({ increment: 50, message: "Fetched Sample Sentences!" });
-			}, 1000);
-			const p = new Promise<void>(resolve => {
-				setTimeout(() => {
-					resolve();
-				}, 2000);
-			});
-			return p;
-		});
-	});
+	vscode.commands.registerCommand("vocabulary-builder.innerWrapper", wordDetail);
 
 
 };

@@ -3,6 +3,7 @@ import { TextDecoder, TextEncoder } from 'util';
 import * as vscode from 'vscode';
 import { globals } from './globals';
 import fetch from 'node-fetch';
+import render from 'dom-serializer';
 
 
 export async function loadTextFile(fpath: string): Promise<string> {
@@ -52,23 +53,30 @@ export function getRenderStr(freq: Map<string, number>, translated: Map<string, 
     return ret;
 };
 
-export async function wordCount(rawtext: string): Promise<Map<string, number>> {
-    let words = rawtext.toLowerCase();
-    //TODO: P2 use libs to split words, support more languages
-    for (let c of globals.nullchars) {
-        words = words.replaceAll(c, " ");
-    }
-    const wordlist = words.split(" ");
-    let freq = new Map<string, number>();
-    for (let word of wordlist) {
-        if (word.length < 3 || word.includes("'") ||  globals.knownWords.includes(word)) {
-            continue;
+export async function getHtmlText(url: string): Promise<string> {
+    //grab raw html
+    let html = await grabHtml(url);
+    if (html.length === 0) { return ""; }
+
+    //extract text
+    const htmlparser2 = require("htmlparser2");
+    const CSSselect = require("css-select");
+    const dom = htmlparser2.parseDocument(html);
+    if (globals.selector.length !== 0) {
+        html = "";
+        for (let sel of globals.selector) {
+            let doms = CSSselect.selectAll(sel, dom);
+            html += render(doms);
         }
-        let val = freq.get(word) ?? 0;
-        freq.set(word, val + 1);
+        html = "<body>" + html + "</body>";
     }
-    return freq;
-};
+
+    var domParser = require('dom-parser');
+    let htmlstr = new domParser().parseFromString(html);
+    //dangerous, must config selectors for websites
+    return (htmlstr.getElementsByTagName("body")[0] ?? { textContent: "" }).textContent;
+}
+
 
 export async function grabHtml(url: string): Promise<string> {
 

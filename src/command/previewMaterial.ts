@@ -1,32 +1,8 @@
 import { globals } from "../globals";
-import { getRenderStr, grabHtml, groupByLevel, loadTextFile, wordCount, writeTextFile } from "../utils";
+import { getHtmlText, getRenderStr, groupByLevel, loadTextFile, writeTextFile } from "../utils";
 import * as vscode from 'vscode';
+import { wordCount } from "../service/wordcount";
 
-import { lookUpDictionary } from "./lookUpDictionary";
-import render from "dom-serializer";
-async function getHtmlText(url: string): Promise<string> {
-    //grab raw html
-    let html = await grabHtml(url);
-    if (html.length === 0) { return ""; }
-
-    //extract text
-    const htmlparser2 = require("htmlparser2");
-    const CSSselect = require("css-select");
-    const dom = htmlparser2.parseDocument(html);
-    if (globals.selector.length !== 0) {
-        html = "";
-        for (let sel of globals.selector) {
-            let doms = CSSselect.selectAll(sel, dom);
-            html += render(doms);
-        }
-        html = "<body>" + html + "</body>";
-    }
-
-    var domParser = require('dom-parser');
-    let htmlstr = new domParser().parseFromString(html);
-    //dangerous, must config selectors for websites
-    return (htmlstr.getElementsByTagName("body")[0] ?? { textContent: "" }).textContent;
-}
 export async function previewMaterial() {
     // The code you place here will be executed every time your command is executed
     // Display a message box to the user
@@ -70,28 +46,8 @@ export async function previewMaterial() {
     globals.newWords = finalmap;
     globals.groupedNewWords = await groupByLevel(globals.newWords);
     // console.log(globals.groupedNewWords);
-    //translate
     globals.newprov.refresh();
     const rawstrs = getRenderStr(globals.newWords, globals.translated);
-    //render web view
-    // let wvp = vscode.window.createWebviewPanel("web", "New words", { preserveFocus: true, viewColumn: 1 }, { enableForms: true });
-
-    // const htmlstrs = rawstrs.map(s => {
-    //     if (s.includes("-")) {
-    //         return `</tr> </tbody> </table><table> <thead> <tr> <th>${s} </th> </tr> </thead> <tbody> <tr>`;
-    //     }
-    //     return "<tr><td><h3>" + s.replaceAll(",", "</h3></td><td><h3>") + "</h3></td></tr>";
-    // });
-    // let strs = "<table><tbody><tr>" + htmlstrs.join("") + "</tr></tbody></table>";
-    // wvp.webview.postMessage(strs);
-    // wvp.webview.html = `
-    // 		<!DOCTYPE html>
-    // 		<html lang="en">
-    // 		<head></head>
-    // 		<body>
-    // 			${strs}
-    // 		</body>
-    // 		</html>`;
 
     writeTextFile(globals.outpath, rawstrs.map(e => e.replaceAll(",", " ")));
 }

@@ -1,12 +1,7 @@
 import { window } from "vscode";
 import { globals } from "../globals";
+import { translate } from "../service/translate";
 
-class responseType {
-    translations: { text: string; }[] = [];
-};
-class responseListType {
-    data: responseType[] = [];
-}
 export async function lookUpDictionary(words?: string[], kind?: string): Promise<string[]> {
     let ret:string[] = [];
     if (words === undefined) {
@@ -22,31 +17,7 @@ export async function lookUpDictionary(words?: string[], kind?: string): Promise
             return [];
         }
     }
-    const req = words.map(e => {
-        return { "text": e };
-    });
-    const axios = require('axios').default;
-    const { v4: uuidv4 } = require('uuid');
-    const translated= await axios({
-        baseURL: globals.translatorConfig.get("endpoint"),
-        url: '/translate',
-        method: 'post',
-        headers: {
-            'Ocp-Apim-Subscription-Key': globals.translatorConfig.get("key"),
-            'Ocp-Apim-Subscription-Region': globals.translatorConfig.get("location"),
-            'Content-type': 'application/json',
-            'X-ClientTraceId': uuidv4().toString()
-        },
-        params: {
-            'api-version': '3.0',
-            'from': 'en',
-            'to': ['zh-Hans']
-        },
-        data: req,
-        responseType: 'json'
-    }).then(function (response: responseListType) {
-        return response.data.map((e: responseType) => e.translations[0].text.replaceAll(" ", ""));
-    });
+    const translated = await translate(words);
     for (let i = 0; i < words.length; ++i){
         globals.translated.set(words[i], translated[i]);
     }
