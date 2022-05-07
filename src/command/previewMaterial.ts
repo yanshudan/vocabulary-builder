@@ -1,5 +1,5 @@
 import { globals } from "../globals";
-import { getHtmlText, getRenderStr, groupByLevel, loadTextFile, writeTextFile } from "../utils";
+import { getHtmlText, groupByLevel, loadTextFile } from "../utils";
 import * as vscode from 'vscode';
 import { wordCount } from "../service/wordcount";
 

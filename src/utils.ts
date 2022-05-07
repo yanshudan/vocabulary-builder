@@ -1,23 +1,27 @@
 import path = require('path');
 import { TextDecoder, TextEncoder } from 'util';
-import * as vscode from 'vscode';
 import { globals } from './globals';
 import fetch from 'node-fetch';
 import render from 'dom-serializer';
-import { translate } from './service/translate';
+import { Uri, window, workspace } from 'vscode';
 
 
 export async function loadTextFile(fpath: string): Promise<string> {
-    const fileUri = vscode.Uri.file(path.resolve(fpath));
-    return await vscode.workspace.fs.readFile(fileUri).then(c => {
+    const fileUri = Uri.file(path.resolve(fpath));
+    try {
+        await workspace.fs.readFile(fileUri);
+    } catch {
+        await workspace.fs.writeFile(fileUri, new TextEncoder().encode(""));
+    }
+    return await workspace.fs.readFile(fileUri).then(c => {
         const res = new TextDecoder("utf-8").decode(c);
         return res;
     });
 }
 export async function writeTextFile(fpath: string, content: string[]): Promise<void> {
-    const fileUri = vscode.Uri.file(path.resolve(fpath));
+    const fileUri = Uri.file(path.resolve(fpath));
     const out = new TextEncoder().encode(content.join("\n"));
-    await vscode.workspace.fs.writeFile(fileUri, out);
+    await workspace.fs.writeFile(fileUri, out);
 }
 export async function dumpFiles() {
 
@@ -25,7 +29,7 @@ export async function dumpFiles() {
     writeTextFile(globals.rootpath + "/goodWords.txt", [...globals.goodWords.keys()]);
     const rawstrs = await getRenderStr(globals.groupedNewWords, globals.translated);
     writeTextFile(globals.outpath, rawstrs.map(e => e.replaceAll(",", " ")));
-    vscode.window.showInformationMessage(`Files dumped at ${globals.rootpath}`);
+    window.showInformationMessage(`Files dumped at ${globals.rootpath}`);
 }
 export async function getRenderStr(freqs: Map<string, Map<string, number>>, translated: Map<string, string>): Promise<string[]> {
     let converted: [string, number][] = [];
@@ -103,7 +107,7 @@ export async function grabHtml(url: string): Promise<string> {
             }
         });
     } catch (e) {
-        vscode.window.showInformationMessage(JSON.stringify(e));
+        window.showInformationMessage(JSON.stringify(e));
         return "";
     }
 

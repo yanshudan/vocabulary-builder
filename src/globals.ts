@@ -1,5 +1,4 @@
-import { TextEncoder } from "util";
-import { Uri, workspace, WorkspaceConfiguration } from "vscode";
+import { workspace, WorkspaceConfiguration } from "vscode";
 import { GoodWordsProvider } from "./provider/goodWordsProvider";
 import { NewWordsProvider } from "./provider/newWordsProvider";
 import { KnownWordsProvider } from "./provider/knownWordsProvider";
@@ -48,12 +47,7 @@ export namespace globals {
         config = workspace.getConfiguration("vocabBuilderConfig");
         fpath = rootpath + "/knownWords.txt";
         outpath = rootpath + "/newWords.txt";
-        try {
-            await workspace.fs.readFile(Uri.file(fpath));
-        } catch {
-            await workspace.fs.writeFile(Uri.file(fpath), new TextEncoder().encode(""));
-        }
-        await workspace.fs.writeFile(Uri.file(outpath), new TextEncoder().encode(""));
+
 
         //word lib
         //TODO: P0 add IELTS/TOEFL, GRE vocabs

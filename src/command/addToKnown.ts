@@ -1,7 +1,5 @@
 import * as vscode from 'vscode';
 import { globals } from '../globals';
-import { writeTextFile } from '../utils';
-
 
 export function addToKnown(word?: string) {
     let text: string[];
