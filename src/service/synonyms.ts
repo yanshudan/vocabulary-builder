@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import { globals } from "../globals";
+import render from "dom-serializer";
 
 export async function Synonyms(word: string) {
 
@@ -9,10 +10,11 @@ export async function Synonyms(word: string) {
         headers: { 'user-agent': agent }
     });
     const html = await response.text();
-    var domParser = require('dom-parser');
-    const htmlstr = new domParser().parseFromString(html);
-    //TODO: P9 must be updated manually cuz the site keeps changing this selector
-    const ret = htmlstr.getElementsByClassName(globals.config.get<string>("synSelctor", "tz_su ")) as { textContent: string }[];
-    return ret.map(e => e.textContent);
+    const htmlparser2 = require("htmlparser2");
+    const CSSselect = require("css-select");
+    const dom = htmlparser2.parseDocument(html);
+    const syns = CSSselect.selectAll("div#primary-area", dom);
+    
+    return syns.map((e:any) => e.children[1].children[1].children[0].data);
 
 }
