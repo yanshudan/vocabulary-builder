@@ -14,11 +14,11 @@ out.txt and knownwords.txt in workspace root folder
 
 This extension contributes the following settings:
 
-* `vocabBuilderConfig.knownWordsPath`:
-* `vocabBuilderConfig.outPath`:
-* `vocabBuilderConfig.translatorConfig`:
-* `vocabBuilderConfig.nullChars`:
-* `vocabBuilderConfig.classSelectors`:
+* `vocabulary-builder.knownWordsPath`:
+* `vocabulary-builder.outPath`:
+* `vocabulary-builder.translatorConfig`:
+* `vocabulary-builder.nullChars`:
+* `vocabulary-builder.classSelectors`:
 ## Known Issues
 
 cannot open file after a call

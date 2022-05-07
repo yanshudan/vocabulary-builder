@@ -23,13 +23,13 @@ export namespace globals {
     export let outpath: string;
     export let translatorConfig: Map<string, string> = new Map<string, string>();
     export let selectors: Map<string, string[]> = new Map<string, string[]>();
-    export let selector: string[]=[];
+    export let selector: string[] = [];
     export let nullchars: string;
 
     //word lists
     export let newWords: Map<string, number>;
     export let goodWords: Map<string, string>;//word=>translation
-    export let knownWords: string[]=[];
+    export let knownWords: string[] = [];
     export let synonyms: string[] = [];
     //providers
     export let knownprov: KnownWordsProvider = new KnownWordsProvider();
@@ -44,7 +44,7 @@ export namespace globals {
     export async function init() {
         //TODO: P1 Documentations in README.md and package.json
         //paths
-        config = workspace.getConfiguration("vocabBuilderConfig");
+        config = workspace.getConfiguration("vocabulary-builder");
         fpath = rootpath + "/knownWords.txt";
         outpath = rootpath + "/newWords.txt";
 
@@ -60,7 +60,7 @@ export namespace globals {
         knownWords = await (await loadTextFile(fpath)).split("\n");
         newWords = new Map<string, number>();
         const goodlist = await (await loadTextFile(rootpath + "/goodWords.txt")).split("\n");
-        goodWords = new Map<string, string>(goodlist.map(e=>[e,e]));
+        goodWords = new Map<string, string>(goodlist.map(e => [e, e]));
         groupedNewWords = new Map<string, Map<string, number>>();
         translated = new Map<string, string>();
 

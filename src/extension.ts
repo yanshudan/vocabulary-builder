@@ -17,7 +17,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	let rootpath: string = vscode.workspace.getConfiguration("vocabBuilderConfig").get("rootPath", "");
+	let rootpath: string = vscode.workspace.getConfiguration("vocabulary-builder").get("rootPath", "");
 	if (rootpath === "") {
 		vscode.window.showInformationMessage("Please pick a path to store your vocabulary");
 		const folders = vscode.workspace.workspaceFolders ?? [{ uri: undefined }];
@@ -32,7 +32,7 @@ export async function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		globals.rootpath = picked[0].fsPath;
-		await vscode.workspace.getConfiguration("vocabBuilderConfig").update("rootPath", picked[0].fsPath);
+		await vscode.workspace.getConfiguration("vocabulary-builder").update("rootPath", picked[0].fsPath);
 	} else {
 		globals.rootpath = rootpath;
 	}
@@ -61,6 +61,6 @@ export async function activate(context: vscode.ExtensionContext) {
 };
 
 // this method is called when your extension is deactivated
-export function deactivate() { 
+export function deactivate() {
 
 }

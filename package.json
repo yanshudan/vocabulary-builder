@@ -125,15 +125,15 @@
             }
         ],
         "configuration": {
-            "title": "vocabBuilderConfig",
+            "title": "vocabulary-builder",
             "properties": {
-                "vocabBuilderConfig.rootPath": {
+                "vocabulary-builder.rootPath": {
                     "type": "string",
                     "scope": "window",
                     "default": "",
                     "description": "Folder to save your vocabulary"
                 },
-                "vocabBuilderConfig.translatorConfig": {
+                "vocabulary-builder.translatorConfig": {
                     "type": "Map<string,string>",
                     "scope": "window",
                     "default": {
@@ -143,19 +143,19 @@
                     },
                     "description": "translator configuration"
                 },
-                "vocabBuilderConfig.nullChars": {
+                "vocabulary-builder.nullChars": {
                     "type": "string",
                     "scope": "window",
                     "default": ",.:!+-—*=#$_?()&;{}<>[]%“”\"/1234567890\n\t\r",
                     "description": "Ignore charecters in text preprocessing"
                 },
-                "vocabBuilderConfig.synSelctor": {
+                "vocabulary-builder.synSelctor": {
                     "type": "string",
                     "scope": "window",
                     "default": "tz_su ",
                     "description": "tz_su "
                 },
-                "vocabBuilderConfig.classSelectors": {
+                "vocabulary-builder.classSelectors": {
                     "type": "Map<string,string[]>",
                     "scope": "window",
                     "default": {
