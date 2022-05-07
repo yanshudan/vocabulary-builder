@@ -2,7 +2,7 @@
     "name": "vocabulary-builder",
     "displayName": "Vocabulary Builder",
     "description": "Filter out common English words in reading/listening materials to see a list of new words. Supports adding new known words  manually on  one click.",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "publisher": "DaiShuDan",
     "engines": {
         "vscode": "^1.66.0"
@@ -134,7 +134,7 @@
                     "description": "Folder to save your vocabulary"
                 },
                 "vocabulary-builder.translatorConfig": {
-                    "type": "Map<string,string>",
+                    "type": "Object",
                     "scope": "window",
                     "default": {
                         "key": "f054fa53741445798fbcc78bf4032d67",
@@ -156,7 +156,7 @@
                     "description": "tz_su "
                 },
                 "vocabulary-builder.classSelectors": {
-                    "type": "Map<string,string[]>",
+                    "type": "object",
                     "scope": "window",
                     "default": {
                         "npr": [

@@ -96,21 +96,6 @@ export async function getHtmlText(url: string): Promise<string> {
 
 
 export async function grabHtml(url: string): Promise<string> {
-
-    let response;
-    try {
-
-        response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                accept: '*/*',
-            }
-        });
-    } catch (e) {
-        window.showInformationMessage(JSON.stringify(e));
-        return "";
-    }
-
     globals.selector = [];
     for (let k of [...globals.selectors.entries()]) {
         if (url.includes(k[0])) {
@@ -118,8 +103,22 @@ export async function grabHtml(url: string): Promise<string> {
             break;
         }
     }
-    const result = await response.text();
-    return result;
+
+    const agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36';
+    let response;
+    try {
+        response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'user-agent': agent,
+                accept: '*/*'
+            }
+        });
+    } catch (e) {
+        window.showInformationMessage(JSON.stringify(e));
+        return "";
+    }
+    return await response.text();
 };
 
 export async function groupByLevel(words: Map<string, number>): Promise<Map<string, Map<string, number>>> {
