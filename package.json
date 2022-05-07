@@ -2,7 +2,7 @@
     "name": "vocabulary-builder",
     "displayName": "Vocabulary Builder",
     "description": "Filter out common English words in reading/listening materials to see a list of new words. Supports adding new known words  manually on  one click.",
-    "version": "0.1.3",
+    "version": "0.2.0",
     "publisher": "DaiShuDan",
     "engines": {
         "vscode": "^1.66.0"
@@ -56,7 +56,7 @@
         "viewsContainers": {
             "activitybar": [
                 {
-                    "icon": "vocabulary-builder.svg",
+                    "icon": "resources/vocabulary-builder.svg",
                     "id": "vocabulary-builder-view",
                     "title": "Vocabulary Builder"
                 }
@@ -86,27 +86,27 @@
             {
                 "command": "vocabulary-builder.previewMaterial",
                 "title": "Filter New Words In Material",
-                "icon": "new.svg"
+                "icon": "resources/new.svg"
             },
             {
                 "command": "vocabulary-builder.dumpGoodWords",
                 "title": "Download good words as local file",
-                "icon": "download.svg"
+                "icon": "resources/download.svg"
             },
             {
                 "command": "vocabulary-builder.addToKnown",
                 "title": "Add To Known Words",
                 "icon": {
-                    "dark": "add.svg",
-                    "light": "add.svg"
+                    "dark": "resources/add.svg",
+                    "light": "resources/add.svg"
                 }
             },
             {
                 "command": "vocabulary-builder.addToGood",
                 "title": "Add To Good Words",
                 "icon": {
-                    "dark": "good.svg",
-                    "light": "good.svg"
+                    "dark": "resources/good.svg",
+                    "light": "resources/good.svg"
                 }
             },
             {
