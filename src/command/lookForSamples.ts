@@ -4,7 +4,6 @@ import { samples } from "../service/samples";
 
 let view: WebviewPanel;
 export async function sampleSentences(word?: string) {
-    //TODO: P2 call NLP services to get sample sentences
     if (word === undefined) {
         const sel = window.activeTextEditor?.selection;
         word = window.activeTextEditor?.document.getText(sel) ?? "";

@@ -14,7 +14,7 @@ export class GoodWordsProvider implements vscode.TreeDataProvider<string> {
     }
     getChildren(index: string): vscode.ProviderResult<string[]> {
         if (index === undefined) {
-            return [...globals.goodWords.keys()];
+            return [...globals.goodWords.keys()].reverse();
         }
         return [index];
     };

@@ -2,33 +2,39 @@
 
 This is the README for "vocabulary-builder". 
 ## Features
-filter and translate new words
-add to known on once click
+- Filter out basic English words out of listening/reading materials
+- Group new words by level
+- Input URL of the material or local path of a txt file
+- Pick known words or the words you like
+- Click on words to see translations, synonyms and sample sentences
+- Dump word list to local files
 
 ## Requirements
-
-out.txt and knownwords.txt in workspace root folder
+ 
+Network connection
 
 ## Extension Settings
 
 
 This extension contributes the following settings:
 
-* `vocabulary-builder.knownWordsPath`:
-* `vocabulary-builder.outPath`:
-* `vocabulary-builder.translatorConfig`:
-* `vocabulary-builder.nullChars`:
-* `vocabulary-builder.classSelectors`:
+* `vocabulary-builder.rootPath`: Root path to save word list files.
+* `vocabulary-builder.translatorConfig`: Endpoint and keys to call Azure Translator
+* `vocabulary-builder.nullChars`: Null chars in material
+* `vocabulary-builder.synSelctor`: The css selector to get synonym from powerthesaurus.com.
+* `vocabulary-builder.classSelectors`: Customizable css selectors for certain websites.
 ## Known Issues
 
-cannot open file after a call
+Lacks word library for CET6, IELTS and GRE
 
 ## Release Notes
 
 
-### 1.0.0
+### 0.3.0
 
-Initial release. Add TODOs
+Initial release. 
+- Add TODOs
+- Basi functionanlities
 
 -----------------------------------------------------------------------------------------------------------
 

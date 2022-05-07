@@ -4,7 +4,7 @@ const agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.3
 const base = 'https://sentence.yourdictionary.com';
 
 export async function samples(word: string) {
-
+    //TODO: P2 call NLP services to get sample sentences
     const response = await fetch(base + '/' + word, {
         headers: { 'user-agent': agent }
     });
