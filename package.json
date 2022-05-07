@@ -152,8 +152,8 @@
                 "vocabulary-builder.synSelctor": {
                     "type": "string",
                     "scope": "window",
-                    "default": "tz_su ",
-                    "description": "tz_su "
+                    "default": "ch_aw",
+                    "description": "css selector of synonyms"
                 },
                 "vocabulary-builder.classSelectors": {
                     "type": "object",
