@@ -1,14 +1,14 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { addToKnown } from './addToKnown';
-import { previewMaterial } from './previewMaterial';
+import { addToKnown } from './command/addToKnown';
+import { previewMaterial } from './command/previewMaterial';
 import { globals } from './globals';
-import { lookForSyn } from './lookForSyn';
-import { sampleSentences } from './sampleSentences';
+import { lookForSyn } from './command/lookForSyn';
+import { sampleSentences } from './command/sampleSentences';
 import { NewWordsProvider } from './provider/newWordsProvider';
-import { addToGood, dumpGoodWords } from './addToGood';
-import { lookUpDictionary } from './lookUpDictionary';
+import { addToGood, dumpGoodWords } from './command/addToGood';
+import { lookUpDictionary } from './command/lookUpDictionary';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 

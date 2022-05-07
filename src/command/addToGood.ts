@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { globals } from './globals';
-import { writeTextFile } from './utils';
+import { globals } from '../globals';
+import { writeTextFile } from '../utils';
 
 
 export function addToGood(word?: string) {

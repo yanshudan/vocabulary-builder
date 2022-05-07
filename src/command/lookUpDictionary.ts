@@ -1,5 +1,5 @@
 import { window } from "vscode";
-import { globals } from "./globals";
+import { globals } from "../globals";
 
 class responseType {
     translations: { text: string; }[] = [];

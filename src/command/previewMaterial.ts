@@ -1,5 +1,5 @@
-import { globals } from "./globals";
-import { getRenderStr, grabHtml, groupByLevel, loadTextFile, wordCount, writeTextFile } from "./utils";
+import { globals } from "../globals";
+import { getRenderStr, grabHtml, groupByLevel, loadTextFile, wordCount, writeTextFile } from "../utils";
 import * as vscode from 'vscode';
 
 import { lookUpDictionary } from "./lookUpDictionary";
