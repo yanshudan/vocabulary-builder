@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import { globals } from './globals';
 import fetch from 'node-fetch';
 import render from 'dom-serializer';
+import { translate } from './service/translate';
 
 
 export async function loadTextFile(fpath: string): Promise<string> {
@@ -18,17 +19,29 @@ export async function writeTextFile(fpath: string, content: string[]): Promise<v
     const out = new TextEncoder().encode(content.join("\n"));
     await vscode.workspace.fs.writeFile(fileUri, out);
 }
+export async function dumpFiles() {
 
-export function getRenderStr(freq: Map<string, number>, translated: Map<string, string>): string[] {
-    freq = new Map([...freq.entries()].sort((a, b) => a[0].length - b[0].length));
+    writeTextFile(globals.fpath, globals.knownWords);
+    writeTextFile(globals.rootpath + "/goodWords.txt", [...globals.goodWords.keys()]);
+    const rawstrs = await getRenderStr(globals.groupedNewWords, globals.translated);
+    writeTextFile(globals.outpath, rawstrs.map(e => e.replaceAll(",", " ")));
+    vscode.window.showInformationMessage(`Files dumped at ${globals.rootpath}`);
+}
+export async function getRenderStr(freqs: Map<string, Map<string, number>>, translated: Map<string, string>): Promise<string[]> {
+    let converted: [string, number][] = [];
+    for (let m of freqs.values()) {
+        converted = converted.concat([...m.entries()]);
+    }
+    converted.sort((a, b) => b[1] - a[1]);
+    converted.sort((a, b) => a[0].length - b[0].length);
     let ret: string[] = [];
     let count = 0, curr = 2, total = 90;
     let nc = total / (curr + 3 + 5);
     let i = 0;
     let tmp: string = "";
     try {
-        for (let item of freq) {
-            const trans = translated.get(item[0])!;
+        for (let item of converted) {
+            const trans = translated.get(item[0]) ?? "无";
             if (item[0].length > curr) {
                 ret = ret.concat([tmp]);
                 tmp = "";

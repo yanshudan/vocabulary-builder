@@ -26,8 +26,7 @@ export async function previewMaterial() {
 
     //wordcount, sort by length and freq
     const freq = await wordCount(rawtext);
-    const mapSort1 = new Map([...freq.entries()].sort((a, b) => b[1] - a[1]));
-    let finalmap = mapSort1;
+    let finalmap = new Map([...freq.entries()].sort((a, b) => b[1] - a[1]));
 
     //pick known words
     const rawpick = await vscode.window.showQuickPick([...finalmap.entries()].map(e => `${e[0]} ${e[1]} times`), { canPickMany: true, ignoreFocusOut: true, "title": "Choose words that you already know" }) ?? [];
@@ -47,7 +46,5 @@ export async function previewMaterial() {
     globals.groupedNewWords = await groupByLevel(globals.newWords);
     // console.log(globals.groupedNewWords);
     globals.newprov.refresh();
-    const rawstrs = getRenderStr(globals.newWords, globals.translated);
-
-    writeTextFile(globals.outpath, rawstrs.map(e => e.replaceAll(",", " ")));
+    
 }

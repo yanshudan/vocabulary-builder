@@ -37,7 +37,3 @@ export function addToGood(word?: string) {
     unique.forEach((val, key) => { globals.goodWords.set(key, val); });
     globals.goodprov.refresh();
 }
-
-export function dumpGoodWords() {
-    writeTextFile(globals.rootpath + "/goodWords.txt", [...globals.goodWords.keys()]);
-}

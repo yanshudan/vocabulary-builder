@@ -36,14 +36,14 @@
             ],
             "view/title": [
                 {
-                    "command": "vocabulary-builder.dumpGoodWords",
-                    "when": "view == goodWords",
-                    "group": "navigation"
+                    "command": "vocabulary-builder.dumpFiles",
+                    "when": "view == newWords",
+                    "group": "navigation@1"
                 },
                 {
                     "command": "vocabulary-builder.previewMaterial",
                     "when": "view == newWords",
-                    "group": "navigation"
+                    "group": "navigation@2"
                 }
             ]
         },
@@ -89,8 +89,8 @@
                 "icon": "resources/new.svg"
             },
             {
-                "command": "vocabulary-builder.dumpGoodWords",
-                "title": "Download good words as local file",
+                "command": "vocabulary-builder.dumpFiles",
+                "title": "Download word lists as local file",
                 "icon": "resources/download.svg"
             },
             {

@@ -65,7 +65,8 @@ export namespace globals {
         //words
         knownWords = await (await loadTextFile(fpath)).split("\n");
         newWords = new Map<string, number>();
-        goodWords = new Map<string, string>();
+        const goodlist = await (await loadTextFile(rootpath + "/goodWords.txt")).split("\n");
+        goodWords = new Map<string, string>(goodlist.map(e=>[e,e]));
         groupedNewWords = new Map<string, Map<string, number>>();
         translated = new Map<string, string>();
 

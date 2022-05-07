@@ -7,9 +7,9 @@ import { globals } from './globals';
 import { lookForSyn } from './command/lookForSyn';
 import { sampleSentences } from './command/lookForSamples';
 import { NewWordsProvider } from './provider/newWordsProvider';
-import { addToGood, dumpGoodWords } from './command/addToGood';
-import { lookUpDictionary } from './command/lookForTranslation';
+import { addToGood } from './command/addToGood';
 import { wordDetail } from './command/wordDetail';
+import { dumpFiles } from './utils';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -52,12 +52,15 @@ export async function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('vocabulary-builder.previewMaterial', previewMaterial);
 	vscode.commands.registerCommand("vocabulary-builder.addToKnown", addToKnown);
 	vscode.commands.registerCommand("vocabulary-builder.addToGood", addToGood);
-	vscode.commands.registerCommand("vocabulary-builder.dumpGoodWords", dumpGoodWords);
+	vscode.commands.registerCommand("vocabulary-builder.dumpFiles", dumpFiles);
 	vscode.commands.registerCommand("vocabulary-builder.lookForSyn", async () => await lookForSyn());
 	vscode.commands.registerCommand("vocabulary-builder.getSampleSentences", async (word) => await sampleSentences(word));
 	vscode.commands.registerCommand("vocabulary-builder.innerWrapper", wordDetail);
 
 
 };
+
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() { 
+
+}

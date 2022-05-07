@@ -31,5 +31,4 @@ export function addToKnown(word?: string) {
     vscode.window.showInformationMessage("You learned word: " + text.join(","));
     globals.knownWords = unique.concat(globals.knownWords);
     globals.knownprov.refresh();
-    writeTextFile(globals.fpath, globals.knownWords);
 }
