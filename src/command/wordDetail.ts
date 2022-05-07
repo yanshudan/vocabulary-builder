@@ -11,6 +11,9 @@ export async function wordDetail(word:string) {
         token.onCancellationRequested(() => {
             console.log("Request Canceled by user");
         });
+        if (word === "") {
+            return;
+        }
         progress.report({ increment: 0 });
         let p1 = sampleSentences(word);
         let p2 = lookForSyn(word);

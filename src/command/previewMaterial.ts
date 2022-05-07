@@ -35,9 +35,8 @@ export async function previewMaterial() {
     console.log(picked);
 
     //add to lists
-    globals.knownWords = globals.knownWords.concat(picked);
+    globals.knownWords = picked.concat(globals.knownWords);
     globals.knownprov.refresh();
-    writeTextFile(globals.fpath, globals.knownWords);
 
     for (let pick of picked) {
         finalmap.delete(pick);
