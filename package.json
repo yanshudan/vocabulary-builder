@@ -2,7 +2,7 @@
     "name": "vocabulary-builder",
     "displayName": "Vocabulary Builder",
     "description": "Filter out common English words in reading/listening materials to see a list of new words. Supports adding new known words  manually on  one click.",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "publisher": "DaiShuDan",
     "engines": {
         "vscode": "^1.66.0"
